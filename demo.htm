@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>jQuery SuperBox!</title>
+	<link rel="stylesheet" href="demo.css" type="text/css" media="screen" />
+	<style type="text/css">
+		/* Base Superbox Styles */
+		#superbox-overlay{position:fixed;top:0;left:0;z-index:9998;width:100%;height:100%;}
+		#superbox-wrapper *{margin:0;padding:0;}
+		#superbox-wrapper{position:fixed;z-index:9999;top:0;display:table;width:100%;height:100%;}
+		#superbox-container{position:relative;display:table-cell;width:100%;height:100%;vertical-align:middle;}
+		#superbox{margin:0 auto;}
+		#superbox-container .loading{margin:0;text-align:center;}
+	</style>
+	<!--[if lt IE 8]>
+	<style type="text/css">
+		#superbox-container{position:absolute;top:50%;display:block;height:auto;}
+		#superbox{position:relative;top:-50%;display:block;}
+	</style>
+	<![endif]-->
+	<!--[if lt IE 7]>
+	<style type="text/css">
+		/* Thanks to jQuery Thickbox (IE expressions) */
+		#superbox-overlay{position:absolute;height:expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight + 'px' : document.body.offsetHeight + 'px');}
+		#superbox-wrapper{position:absolute;margin-top:expression(0 - parseInt(this.offsetHeight / 2) + (document.documentElement && document.documentElement.scrollTop || document.body.scrollTop) + 'px');}
+	</style>
+	<![endif]-->
+	<style type="text/css">
+		/* Default Theme */
+		#superbox-overlay{background:#000;}
+		#superbox-container .loading{text-align:center;font-size:40px;color:#fff;}
+		#superbox{padding:10px;background:#fff;}
+		#superbox-innerbox{padding:0 20px 10px;}
+		#superbox.image{text-align:center;}
+		#superbox .close,
+		#superbox .nextprev{overflow:hidden;}
+	</style>
+	<style type="text/css">
+		/* Custom Theme */
+		#superbox-overlay{background:#ccc;}
+		#superbox-container .loading{width:32px;height:32px;margin:0 auto;text-indent:-9999px;background:url(http://pan.fotovista.com/pixmania/style/images/multipays/fa/loadingAnimation.gif) no-repeat 0 0;}
+		#superbox .close a{float:right;padding:0 5px;line-height:20px;background:#333;cursor:pointer;}
+		#superbox .close a span{color:#fff;}
+		#superbox .nextprev{float:left;}
+		#superbox .nextprev a{float:left;margin-right:5px;padding:0 5px;line-height:20px;background:#333;cursor:pointer;color:#fff;}
+	</style>
+	<style type="text/css">
+		h1 span{color:#263b97;}
+	</style>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.superbox.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$.superbox.settings = {
+				closeTxt: "Fermer",
+				loadTxt: "Chargement...",
+				nextTxt: "Suivant",
+				prevTxt: "Précédent"
+			};
+			$.superbox();
+		});
+	</script>
+</head>
+<body>
+	<div id="container">
+		<h1>jQuery Super<span>Box!</span></h1>
+		
+		<p><em>jQuery Superbox!</em> permet de créer des éléments de type "<a href="http://www.huddletogether.com/projects/lightbox2/">Lightbox</a>".</p>
+		<p>Par défaut, la superbox est générée d'après l'attribut <strong><code>rel</code></strong> d'un lien. Il doit contenir le mot <strong><code>superbox</code></strong>, suivi du type entre crochets (<code>rel="superbox[<strong>type</strong>]"</code>).</p>
+		<p>Ce type sera éventuellement associé à un id et une ou plusieurs classes (<code>rel="superbox[type<strong>#mon_id.ma_classe</strong>]"</code>) qui seront appliqués à la box.</p>
+		<p>Les paramètres spécifiques au type de box seront ensuite placés à la suite, entre crochets.</p>
+		
+		<p>La box sera placée en <strong><code>position:fixed</code></strong>, sauf si sa hauteur dépasse la surface d'affichage. Dans ce cas, elle passera en <strong><code>position:absolute</code></strong>, ce qui permettra de voir tout la box à l'aide des barres de défilement du navigateur.</p>
+		
+		<p>Pour activer <em>jQuery Superbox!</em>, la méthode $.superbox() doit être executée au chargement de la page :</p>
+		<pre><code>$(function(){
+	$.superbox();
+});</code></pre>
+		
+		<p>Certains paramètres peuvent être modifiés, voici les valeurs par défaut :</p>
+		<pre><code>$.superbox.settings = {
+	<strong>boxId</strong>: "superbox", // Attribut id de l'élément "superbox"
+	<strong>boxClasses</strong>: "", // Classes de l'élément "superbox"
+	<strong>overlayOpacity</strong>: .8, // Opacité du fond
+	<strong>boxWidth</strong>: "600", // Largeur par défaut de la box
+	<strong>boxHeight</strong>: "400", // Hauteur par défaut de la box
+	<strong>loadTxt</strong>: "Loading...", // Texte de loading
+	<strong>closeTxt</strong>: "Close", // Texte du bouton "Close"
+	<strong>prevTxt</strong>: "Previous", // Texte du bouton "previous"
+	<strong>nextTxt</strong>: "Next" // Texte du bouton "Next"
+};</code></pre>
+		<p>Les différents types de box sont détaillés à la suite.</p>
+		
+		<div>
+		<h2>Image</h2>
+		<p>Générer une box contenant une image.</p>
+		<h3>Utilisation</h3>
+		<p>Par défaut, les dimensions prennent celles de l'image (il est possible d'ajouter un padding en css) :</p>
+		<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		
+		<p>Mais il est également possible de spécifier les dimensions :</p>
+		<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image][500x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		<p>Largeur seulement :</p>
+		<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image][500x]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		<p>Hauteur seulement :</p>
+		<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image][x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		
+		<p>Si la hauteur de l'image dépasse la hauteur de la box, la hauteur spécifiée n'est pas prise en compte.</p>
+		<p>Si un attribut title existe sur le lien, il sera reporté sur l'image. Sinon, c'est le texte de ce lien qui sera repris pour l'attribut title de l'image.</p>
+		
+		<h3>Exemples</h3>
+		<p><a href="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5.jpg" rel="superbox[image][700x]">Image Superbox (largeur définie)</a></p>
+		<p><a href="http://farm3.static.flickr.com/2227/2181684027_d03d0b3ef8.jpg" rel="superbox[image][x500]">Image Superbox (hauteur définie)</a></p>
+		<p><a href="http://farm3.static.flickr.com/2067/2186324460_644d3f97eb.jpg" rel="superbox[image]">Image Superbox (dimensions auto)</a></p>
+		</div>
+		
+		<div>
+		<h2>Gallery</h2>
+		<p>Générer une galerie d'images.</p>
+		<h3>Utilisation</h3>
+		<p>Le second paramètre sera le nom de la galerie. Tous les liens portant ce nom feront partie de la même galerie.<br /> Par défaut, les dimensions prennent celles des images (il est possible d'ajouter un padding en css) :</p>
+		<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		
+		<p>Mais il est également possible de spécifier les dimensions :</p>
+		<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery][500x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		<p>Largeur seulement :</p>
+		<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery][500x]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		<p>Hauteur seulement :</p>
+		<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery][x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		
+		<p>Si la hauteur de l'image dépasse la hauteur de la box, la hauteur spécifiée n'est pas prise en compte.</p>
+		
+		<h3>Exemples</h3>
+		<p>Taille auto :<br />
+			<a href="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5.jpg" rel="superbox[gallery][my_gallery]"><img src="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5_s.jpg" width="75" height="75" alt="" /></a>
+			<a href="http://farm3.static.flickr.com/2227/2181684027_d03d0b3ef8.jpg" rel="superbox[gallery][my_gallery]"><img src="http://farm3.static.flickr.com/2227/2181684027_d03d0b3ef8_s.jpg" width="75" height="75" alt="" /></a>
+			<a href="http://farm3.static.flickr.com/2067/2186324460_644d3f97eb.jpg" rel="superbox[gallery][my_gallery]"><img src="http://farm3.static.flickr.com/2067/2186324460_644d3f97eb_s.jpg" width="75" height="75" alt="" /></a>
+		</p>
+		<p>Dimensions définies :<br />
+			<a href="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5.jpg" rel="superbox[gallery][my_gallery_2][500x500]"><img src="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5_s.jpg" width="75" height="75" alt="" /></a>
+			<a href="http://farm3.static.flickr.com/2227/2181684027_d03d0b3ef8.jpg" rel="superbox[gallery][my_gallery_2][500x500]"><img src="http://farm3.static.flickr.com/2227/2181684027_d03d0b3ef8_s.jpg" width="75" height="75" alt="" /></a>
+			<a href="http://farm3.static.flickr.com/2067/2186324460_644d3f97eb.jpg" rel="superbox[gallery][my_gallery_2][500x500]"><img src="http://farm3.static.flickr.com/2067/2186324460_644d3f97eb_s.jpg" width="75" height="75" alt="" /></a>
+		</p>
+		</div>
+		
+		<div>
+		<h2>iFrame</h2>
+		<p>Générer une box contenant une iframe.</p>
+		<h3>Exemples</h3>
+		<p><a href="http://www.example.com" rel="superbox[iframe]">iFrame Superbox (dimensions auto)</a></p>
+		<p><a href="http://fr.wikipedia.org/wiki/Special:Page_au_hasard" rel="superbox[iframe.wikipedia.fdskljkl.ldsfkjfjklds][700x500]">iFrame Superbox (dimensions définies)</a></p>
+		<p><a href="http://www.google.fr/news?output=xhtml&source=mobileproducts&hl=fr" rel="superbox[iframe][750x500]">iFrame Superbox (dimensions définies)</a></p>
+		
+		<h3>Utilisation</h3>
+		<pre><code>&lt;a href="http://example.com/" rel="superbox[iframe.wikipedia][700x500]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		</div>
+		
+		<div id="box-content">
+		<h2>Content</h2>
+		<p>Générer une box contenant un élément de la page</p>
+		<p>Le lien sera interne, et pointera vers un élément de la page à l'aide de son attribut <strong>id</strong>.</p>
+		<p>Cet élément sera copié pour apparaître dans une box.</p>
+		<h3>Exemple</h3>
+		<p><a href="#box-content" rel="superbox[content]">Element SuperBox</a></p>
+		<p><a href="#box-content" rel="superbox[content][400x150]">Element SuperBox (dimensions)</a></p>
+		<h3>Utilisation</h3>
+		<pre><code>&lt;a href="#box-content" rel="superbox[content]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		</div>
+	</div>
+</body>
+</html>
