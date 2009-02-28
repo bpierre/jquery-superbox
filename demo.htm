@@ -8,10 +8,9 @@
 	<style type="text/css">
 		/* Base Superbox Styles */
 		#superbox-overlay{position:fixed;top:0;left:0;z-index:9998;width:100%;height:100%;}
-		#superbox-wrapper *{margin:0;padding:0;}
 		#superbox-wrapper{position:fixed;z-index:9999;top:0;display:table;width:100%;height:100%;}
-		#superbox-container{position:relative;display:table-cell;width:100%;height:100%;vertical-align:middle;}
-		#superbox{margin:0 auto;}
+		#superbox-container{position:relative;display:table-cell;width:100%;height:100%;margin:0;padding:0;vertical-align:middle;}
+		#superbox{margin:0 auto;padding:0;}
 		#superbox-container .loading{margin:0;text-align:center;}
 	</style>
 	<!--[if lt IE 8]>
@@ -32,7 +31,7 @@
 		#superbox-overlay{background:#000;}
 		#superbox-container .loading{text-align:center;font-size:40px;color:#fff;}
 		#superbox{padding:10px;background:#fff;}
-		#superbox-innerbox{padding:0 20px 10px;}
+		#superbox-innerbox{padding:10px 0;}
 		#superbox.image{text-align:center;}
 		#superbox .close,
 		#superbox .nextprev{overflow:hidden;}
@@ -43,13 +42,9 @@
 		#superbox-container .loading{width:32px;height:32px;margin:0 auto;text-indent:-9999px;background:url(http://pan.fotovista.com/pixmania/style/images/multipays/fa/loadingAnimation.gif) no-repeat 0 0;}
 		#superbox .close a{float:right;padding:0 5px;line-height:20px;background:#333;cursor:pointer;}
 		#superbox .close a span{color:#fff;}
-		#superbox .nextprev{float:left;}
 		#superbox .nextprev a{float:left;margin-right:5px;padding:0 5px;line-height:20px;background:#333;cursor:pointer;color:#fff;}
+		#superbox .nextprev .disabled{background:#ccc;cursor:default;}
 	</style>
-	<style type="text/css">
-		h1 span{color:#263b97;}
-	</style>
-	
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 	<script type="text/javascript" src="jquery.superbox.js"></script>
 	<script type="text/javascript">
@@ -68,18 +63,23 @@
 	<div id="container">
 		<h1>jQuery Super<span>Box!</span></h1>
 		
-		<p><em>jQuery Superbox!</em> permet de créer des éléments de type "<a href="http://www.huddletogether.com/projects/lightbox2/">Lightbox</a>".</p>
-		<p>Par défaut, la superbox est générée d'après l'attribut <strong><code>rel</code></strong> d'un lien. Il doit contenir le mot <strong><code>superbox</code></strong>, suivi du type entre crochets (<code>rel="superbox[<strong>type</strong>]"</code>).</p>
-		<p>Ce type sera éventuellement associé à un id et une ou plusieurs classes (<code>rel="superbox[type<strong>#mon_id.ma_classe</strong>]"</code>) qui seront appliqués à la box.</p>
-		<p>Les paramètres spécifiques au type de box seront ensuite placés à la suite, entre crochets.</p>
+		<p><em>jQuery Superbox!</em> permet de créer des fenêtres avec effet <a href="http://en.wikipedia.org/wiki/Lightbox_(JavaScript)">Lightbox</a>.</p>
+		<p>Ce script est un plugin pour jQuery (1.3+).</p>
+		<p>Pourquoi créer un nouveau script de ce type, alors qu'il en existe déjà <a href="http://planetozh.com/projects/lightbox-clones/">beaucoup</a> ?</p>
+		<ul>
+			<li>L'accessibilité. Seul l'attribut <code>rel</code> est utilisé pour déclencher le script. L'attribut <code>href</code> est donc cohérent : il cible l'adresse d'une image, celle d'une page ou l'identifiant d'un élément de la page (ancre).</li>
+			<li>L'extensibilité. Superbox n'impose aucun style, tout est <strong>entièrement</strong> et <strong>facilement</strong> stylable en CSS.</li>
+		</ul>
 		
-		<p>La box sera placée en <strong><code>position:fixed</code></strong>, sauf si sa hauteur dépasse la surface d'affichage. Dans ce cas, elle passera en <strong><code>position:absolute</code></strong>, ce qui permettra de voir tout la box à l'aide des barres de défilement du navigateur.</p>
+		<p>Par défaut, la superbox est générée d'après l'attribut <code>rel</code> d'un lien. Il doit contenir le mot <code>superbox</code>, suivi du type entre crochets (&nbsp;<code>rel="superbox[<strong>type</strong>]"</code>&nbsp;).</p>
+		<p>Ce type sera éventuellement associé à un id et une ou plusieurs classes (&nbsp;<code>rel="superbox[type<strong>#mon_id.ma_classe</strong>]"</code>&nbsp;) qui seront appliqués à la box.</p>
+		<p>Les paramètres spécifiques au type de box seront ensuite placés à la suite, entre crochets.</p>
+		<p>La box sera placée en <code>position:fixed</code>, sauf si sa hauteur dépasse la surface d'affichage. Dans ce cas, elle passera en <code>position:absolute</code>, ce qui permettra de voir toute la box à l'aide des barres de défilement du navigateur.</p>
 		
 		<p>Pour activer <em>jQuery Superbox!</em>, la méthode $.superbox() doit être executée au chargement de la page :</p>
 		<pre><code>$(function(){
 	$.superbox();
 });</code></pre>
-		
 		<p>Certains paramètres peuvent être modifiés, voici les valeurs par défaut :</p>
 		<pre><code>$.superbox.settings = {
 	<strong>boxId</strong>: "superbox", // Attribut id de l'élément "superbox"
@@ -95,8 +95,8 @@
 		<p>Les différents types de box sont détaillés à la suite.</p>
 		
 		<div>
-		<h2>Image</h2>
-		<p>Générer une box contenant une image.</p>
+		<h2>Mode image</h2>
+		<p>Afficher une box contenant une image.</p>
 		<h3>Utilisation</h3>
 		<p>Par défaut, les dimensions prennent celles de l'image (il est possible d'ajouter un padding en css) :</p>
 		<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image]"&gt;SuperBox&lt;/a&gt;</code></pre>
@@ -118,8 +118,8 @@
 		</div>
 		
 		<div>
-		<h2>Gallery</h2>
-		<p>Générer une galerie d'images.</p>
+		<h2>Mode galerie</h2>
+		<p>Afficher une galerie d'images.</p>
 		<h3>Utilisation</h3>
 		<p>Le second paramètre sera le nom de la galerie. Tous les liens portant ce nom feront partie de la même galerie.<br /> Par défaut, les dimensions prennent celles des images (il est possible d'ajouter un padding en css) :</p>
 		<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery]"&gt;SuperBox&lt;/a&gt;</code></pre>
@@ -147,27 +147,26 @@
 		</div>
 		
 		<div>
-		<h2>iFrame</h2>
+		<h2>Mode iFrame</h2>
 		<p>Générer une box contenant une iframe.</p>
+		<h3>Utilisation</h3>
+		<pre><code>&lt;a href="http://example.com/" rel="superbox[iframe.wikipedia][700x500]"&gt;SuperBox&lt;/a&gt;</code></pre>
 		<h3>Exemples</h3>
 		<p><a href="http://www.example.com" rel="superbox[iframe]">iFrame Superbox (dimensions auto)</a></p>
 		<p><a href="http://fr.wikipedia.org/wiki/Special:Page_au_hasard" rel="superbox[iframe.wikipedia.fdskljkl.ldsfkjfjklds][700x500]">iFrame Superbox (dimensions définies)</a></p>
 		<p><a href="http://www.google.fr/news?output=xhtml&source=mobileproducts&hl=fr" rel="superbox[iframe][750x500]">iFrame Superbox (dimensions définies)</a></p>
-		
-		<h3>Utilisation</h3>
-		<pre><code>&lt;a href="http://example.com/" rel="superbox[iframe.wikipedia][700x500]"&gt;SuperBox&lt;/a&gt;</code></pre>
 		</div>
 		
 		<div id="box-content">
-		<h2>Content</h2>
+		<h2>Mode contenu</h2>
 		<p>Générer une box contenant un élément de la page</p>
 		<p>Le lien sera interne, et pointera vers un élément de la page à l'aide de son attribut <strong>id</strong>.</p>
 		<p>Cet élément sera copié pour apparaître dans une box.</p>
-		<h3>Exemple</h3>
-		<p><a href="#box-content" rel="superbox[content]">Element SuperBox</a></p>
-		<p><a href="#box-content" rel="superbox[content][400x150]">Element SuperBox (dimensions)</a></p>
 		<h3>Utilisation</h3>
 		<pre><code>&lt;a href="#box-content" rel="superbox[content]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		<h3>Exemple</h3>
+		<p><a href="#box-content" rel="superbox[content]">Element SuperBox</a></p>
+		<p><a href="#box-content" rel="superbox[content][500x400]">Element SuperBox (dimensions)</a></p>
 		</div>
 	</div>
 </body>
