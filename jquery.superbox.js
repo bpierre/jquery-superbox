@@ -1,17 +1,19 @@
 /*
- * jQuery SuperBox
+ * jQuery SuperBox! 0.9.0
  * 
  TODO :
  - Ajax
  - Document.load if init is before </body> against IE crash.
+ - Animations
+ - Image / Gallery mode : display a legend
 */
 ;(function($){
 	
 	// Local variables
-	var $overlay, $wrapper, $container, $superbox, $closeBtn, $loading, $nextprev, $nextBtn, $prevBtn, settings;
+	var $overlay, $wrapper, $container, $superbox, $closeBtn, $loading, $nextprev, $nextBtn, $prevBtn, settings,
 	
 	// Default settings
-	var defaultSettings = {
+	defaultSettings = {
 		boxId: "superbox",
 		boxClasses: "",
 		overlayOpacity: .8,
@@ -21,11 +23,11 @@
 		closeTxt: "Close",
 		prevTxt: "Previous",
 		nextTxt: "Next"
-	};
+	},
 	
-	var galleryGroups = {};
-	var galleryMode = false;
-	var hideElts = $([]);
+	galleryGroups = {},
+	galleryMode = false,
+	hideElts = $([]);
 	
 	// Init dispatcher
 	$.superbox = function(){
@@ -52,22 +54,22 @@
 		$("a[rel^=superbox]").each(function(){
 			
 			// Optimisation
-			var $this = $(this);
-			var relAttr = $this.attr("rel");
+			var $this = $(this),
+			relAttr = $this.attr("rel"),
 			
 			// Match type (ex : superbox[gallery#my_id.my_class][my_gallery] > gallery
-			var type = relAttr.match(/^superbox\[([^#\.\]]+)/)[1];
+			type = relAttr.match(/^superbox\[([^#\.\]]+)/)[1],
 			
 			// Match additionnal classes or IDs (#xxx.yyy.zzz)
-			var boxCurrentAttrs = relAttr.replace("superbox", "").match(/([#\.][^#\.\]]+)/g) || [];
+			boxCurrentAttrs = relAttr.replace("superbox", "").match(/([#\.][^#\.\]]+)/g) || [],
+			
+			// Box ID and classes
+			newBoxId = settings.boxId,
+			newBoxClasses = settings.boxClasses;
 			
 			// Additionnal rel settings
 			this._relSettings = relAttr.replace("superbox["+ type + boxCurrentAttrs.join("") +"]", "");
-			
-			// Box ID and classes
-			var newBoxId = settings.boxId;
-			var newBoxClasses = settings.boxClasses;
-			
+            
 			// Redefine settings
 			$.each(boxCurrentAttrs, function(i, val){ // each class or id
 				if (val.substr(0,1) == "#"){
@@ -86,7 +88,7 @@
 	
 	/*-- Superbox Method --*/
 	$.fn.superbox = function(type, curSettings){
-		var curSettings = $.extend({}, settings, curSettings);
+		curSettings = $.extend({}, settings, curSettings);
 		$.superbox[type](this, curSettings);
 	};
 	
@@ -96,16 +98,14 @@
 		// Image
 		image: function($elt, curSettings, type){
 			
-			var relSettings = getRelSettings($elt.get(0));
+			var relSettings = getRelSettings($elt.get(0)),
+			dimensions = false;
 			
 			// Extra settings
 			if (relSettings && type == "gallery")
-				var dimensions = relSettings[1];
+				dimensions = relSettings[1];
 			else if (relSettings)
-				var dimensions = relSettings[0];
-			else
-				var dimensions = false;
-			
+				dimensions = relSettings[0];
 			
 			// On click event
 			$elt.click(function(e){
@@ -121,12 +121,17 @@
 				initLoading(function(){
 					
 					// Dimensions
-					var dims = false;
-					if (dimensions)
-						dims = dimensions.split("x");
+					var dims = false,
 					
 					// Image
-					var $curImg = $('<img src="'+ $elt.attr("href") +'" title="'+ ($elt.attr("title") || $elt.text()) +'" />');
+					$curImg;
+					
+					if (dimensions) {
+						dims = dimensions.split("x");
+					}
+					
+					// Image
+					$curImg = $('<img src="'+ $elt.attr("href") +'" title="'+ ($elt.attr("title") || $elt.text()) +'" />');
 					
 					// On image load
 					$curImg.load(function(){
@@ -154,8 +159,9 @@
 			var extraSettings = getRelSettings($elt.get(0));
 			
 			// Create group
-			if(!galleryGroups[extraSettings[0]])
-				galleryGroups[extraSettings[0]] = [];
+			if(!galleryGroups[extraSettings[0]]) {
+			    galleryGroups[extraSettings[0]] = [];
+			}
 			
 			// Add element to current group
 			galleryGroups[extraSettings[0]].push($elt);
@@ -182,9 +188,14 @@
 				initLoading(function(){
 					
 					// Dimensions
-					var dims = false;
-					if (extraSettings)
+					var dims = false,
+					
+					// iFrame
+					$iframe;
+					
+					if (extraSettings) {
 						dims = extraSettings[0].split("x");
+					}
 					
 					curSettings = $.extend({}, curSettings, {
 						boxWidth: dims[0] || curSettings.boxWidth,
@@ -192,7 +203,7 @@
 					});
 					
 					// iFrame
-					var $iframe = $('<iframe src="'+ $elt.attr("href") +'" name="'+ $elt.attr("href") +'" frameborder="0" scrolling="auto" hspace="0" width="'+ curSettings.boxWidth +'" height="'+ curSettings.boxHeight +'"></iframe>');
+					$iframe = $('<iframe src="'+ $elt.attr("href") +'" name="'+ $elt.attr("href") +'" frameborder="0" scrolling="auto" hspace="0" width="'+ curSettings.boxWidth +'" height="'+ curSettings.boxHeight +'"></iframe>');
 					
 					// On iFrame load
 					$iframe.load(function(){
@@ -326,8 +337,9 @@
 		$nextprev.show();
 		
 		galleryMode = true;
-		var nextKey = $elt.get(0)._superboxGroupKey + 1;
-		var prevKey = nextKey - 2;
+		
+		var nextKey = $elt.get(0)._superboxGroupKey + 1,
+		    prevKey = nextKey - 2;
 		
 		// Next
 		if (galleryGroups[group][nextKey]){
@@ -369,11 +381,6 @@
 			hideElts.show();
 		});
 		galleryMode = false;
-	};
-	
-	// Show wrapper (display: table)
-	function showWrapper(){
-		$wrapper.css({opacity: 1, display: "table"});
 	};
 	
 	// "Loading..."
