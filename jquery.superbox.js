@@ -1,11 +1,13 @@
 /*
  * jQuery SuperBox! 0.9.0
- * 
- TODO :
- - Ajax
- - Document.load if init is before </body> against IE crash.
- - Animations
- - Image / Gallery mode : display a legend
+ * Copyright (c) 2009 Pierre Bertet (pierrebertet.net)
+ * Licensed under the MIT (MIT-LICENSE.txt)
+ *
+ * TODO :
+ * - Ajax
+ * - Document.load if init is before </body> against IE crash.
+ * - Animations
+ * - Image / Gallery mode : display a legend
 */
 ;(function($){
 	
@@ -498,4 +500,4 @@
 		}
 	};
 	
-})(jQuery)
+})(jQuery);
