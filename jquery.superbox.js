@@ -83,8 +83,9 @@
 			});
 			
 			// Call type method
-			if (type.search(/^image|gallery|iframe|content|ajax$/) != -1)
+			if (type.search(/^image|gallery|iframe|content|ajax$/) != -1) {
 				$this.superbox(type, {boxId: newBoxId, boxClasses: newBoxClasses});
+			}
 		});
 	};
 	
@@ -373,6 +374,7 @@
 		$loading.hide();
 		$nextprev.hide();
 		$wrapper.hide().css({position: "fixed", top: 0});
+		$innerbox.empty();
 	};
 	
 	// Hide Box + Overlay
