@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>jQuery SuperBox!</title>
+	<link rel="stylesheet" href="styles/demo.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="../jquery.superbox.css" type="text/css" media="all" />
+	<style type="text/css">
+		/* Custom Theme */
+		#superbox-overlay{background:#e0e4cc;}
+		#superbox-container .loading{width:32px;height:32px;margin:0 auto;text-indent:-9999px;background:url(loader.gif) no-repeat 0 0;}
+		#superbox .close a{float:right;padding:0 5px;line-height:20px;background:#333;cursor:pointer;}
+		#superbox .close a span{color:#fff;}
+		#superbox .nextprev a{float:left;margin-right:5px;padding:0 5px;line-height:20px;background:#333;cursor:pointer;color:#fff;}
+		#superbox .nextprev .disabled{background:#ccc;cursor:default;}
+	</style>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery.superbox.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$.superbox.settings = {
+				closeTxt: "Close",
+				loadTxt: "Loading...",
+				nextTxt: "Next",
+				prevTxt: "Previous"
+			};
+			$.superbox();
+		});
+	</script>
+</head>
+<body>
+	<div id="container">
+		<h1>jQuery Super<span>Box!</span></h1>
+		
+		<dl class="translations">
+			<dt>Traductions</dt>
+			<dd class="fr"><a href="francais.html" lang="fr">Français</a></dd>
+			<dd class="en"><strong><a href="english.html" lang="en">English</a></strong></dd>
+		</dl>
+		
+		<p class="translated-by">The english version of this page has been generously translated from french by <a href="http://anna.ogcreation.fr/">Anna Mondeteguy</a>.</p>
+		
+		<h2>Introduction</h2>
+		
+		<p><em>jQuery Superbox!</em> is a script which allows you display windows with the <a href="http://en.wikipedia.org/wiki/Lightbox_(JavaScript)">lightbox</a> effect.</p>
+		<p>This script is a plugin for jQuery (1.3.x).</p>
+		<p>Why create a new script of this kind, when <a href="http://planetozh.com/projects/lightbox-clones/">many</a> exist already?</p>
+		<ul>
+			<li><strong>Accessibility</strong>. only the <code>rel</code> attribute is used to launch the script. The <code>href</code> attribute is therefore coherent: he targets the address of a picture, of a page, or an element identifier (anchor).</li>
+			<li><strong>Extensibility</strong>. Superbox doesn't set any style, everything is <strong>easily</strong> and <strong>entirely</strong> CSS stylable.</li>
+			<li>The <strong>MIT license</strong>. this license allows you to use, duplicate, modify, publish, distribute, merge, sell and even change the script license. Your only obligation is to keep the script's author name.</li>
+			<li>It's <strong>fun</strong>.</li>
+		</ul>
+		<p><em>jQuery Superbox!</em> can display <a href="#mode-image">pictures</a>, <a href="#mode-gallery">pictures galleries</a>, <a href="#mode-iframe">external pages</a>, or even <a href="#mode-content">a page element</a>.</p>
+		
+		<h2>Download</h2>
+		<p>The minified version of Superbox is <strong>2KB</strong> when using GZip compressing, <strong>5.4kb</strong> otherwise.</p>
+		<p><strong><a href="http://www.pierrebertet.net/projects/jquery_superbox/jquery_superbox.zip">Donwload jQuery Superbox! 0.9.0 (zip)</a>
+</strong></p>
+		
+		<h2>Contribute</h2>
+		<p>You want to participate? Don't hesitate to visit the Bittbucket project webpage; there you can <a href="http://bitbucket.org/bpierre/jquery-superbox/issues/">report bugs</a>, suggest improvements and contribute to the code: <a href="http://bitbucket.org/bpierre/jquery-superbox/">http://bitbucket.org/bpierre/jquery-superbox/</a></p>
+		
+		<h2>Getting started</h2>
+		<p>To install this script, you must include on your page <a href="http://jquery.com/">jQuery</a>, and also the files <strong>jquery.superbox-min.js</strong> (minified version) and <strong>jquery.superbox.css</strong>:</p>
+		<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;jquery.superbox.css&quot; type=&quot;text/css&quot; media=&quot;all&quot; /&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.superbox-min.js&quot;&gt;&lt;/script&gt;</code></pre>
+		
+		<p>By default, the superbox is generated from the <code>rel</code> attribute of a link. It must contain the word <code>superbox</code>, followed by the display mode in square brackets: <code>rel="superbox[<strong>display_mode</strong>]"</code>.</p>
+		
+		<p>The code name will eventually be associated to an <code>id</code> and one or several <code>class</code> (CSS syntax) which will be applied to the generated window: <code>rel="superbox[type<strong>#my_id.my_class</strong>]"</code>.
+		
+		<p>The parameters specific to the display mode will then be put behind, in square brackets.</p>
+		
+		<p>The windows is placed in <code>position:fixed</code>, except if its height exceeds the display area. In that case, it will go in <code>position:absolute</code>, which will allow to see the whole zone using the browser's scroll bars.</p>
+		
+		<p>To activate <em>jQuery Superbox!</em>, the <code>$.superbox()</code> method must be executed at the page's loading :</p>
+		
+		<pre><code>$(function(){
+	$.superbox();
+});</code></pre>
+		<p>Some parameters can be defined; all are optional. The default values are as follow:</p>
+		<pre><code>$.superbox.settings = {
+	<strong>boxId</strong>: "superbox", // Id attribute of the "superbox" element
+	<strong>boxClasses</strong>: "", // Class of the "superbox" element
+	<strong>overlayOpacity</strong>: .8, // Background opaqueness
+	<strong>boxWidth</strong>: "600", // Default width of the box
+	<strong>boxHeight</strong>: "400", // Default height of the box
+	<strong>loadTxt</strong>: "Loading...", // Loading text
+	<strong>closeTxt</strong>: "Close", // "Close" button text
+	<strong>prevTxt</strong>: "Previous", // "Previous" button text
+	<strong>nextTxt</strong>: "Next" // "Next" button text
+};</code></pre>
+		
+		<div id="mode-image">
+			<h2>Picture mode</h2>
+			<p>Display a box containing a picture.</p>
+			
+			<h3>Demo</h3>
+			<p><a href="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5.jpg" rel="superbox[image]">Superbox picture (auto dimensions)</a></p>
+			<p><a href="http://farm4.static.flickr.com/3111/2605394848_e11968abaf.jpg" rel="superbox[image][700x]">Superbox picture (defined width)</a></p>
+			<p><a href="http://farm4.static.flickr.com/3031/2605388478_b8ae228aab.jpg" rel="superbox[image][x600]">Superbox picture (defined height)</a></p>
+			
+			<h3>Use</h3>
+			<p>By default, the dimensions take those of the picture (it's possible to add a padding with css):</p>
+			<pre><code>&lt;a href="http://example.com/picture.png" rel="superbox[image]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<p>But it is also possible to specify the dimensions :</p>
+			<pre><code>&lt;a href="http://example.com/picture.png" rel="superbox[image][500x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<p>Width only:</p>
+			<pre><code>&lt;a href="http://example.com/picture.png" rel="superbox[image][500x]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<p>Height only:</p>
+			<pre><code>&lt;a href="http://example.com/picture.png" rel="superbox[image][x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<p>If the picture's height exceeds the box's height, the specified height is ignored.</p>
+			<p>If a <code>title</code> attribute exists on the link, it will be transfered over to the picture. If not, it's the text of this link which will be taken for the <code>title</code> attribute of the picture.</p>
+		</div>
+		
+		<div id="mode-gallery">
+			<h2>Gallery mode</h2>
+			<p>Displays a picture gallery. It is possible to navigate using the buttons or the arrow keys.</p>
+			
+			<h3>Demo</h3>
+			<p>Auto size:<br />
+				<a href="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5.jpg" rel="superbox[gallery][my_gallery]"><img src="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5_s.jpg" width="75" height="75" alt="" /></a>
+				<a href="http://farm4.static.flickr.com/3111/2605394848_e11968abaf.jpg" rel="superbox[gallery][my_gallery]"><img src="http://farm4.static.flickr.com/3111/2605394848_e11968abaf_s.jpg" width="75" height="75" alt="" /></a>
+				<a href="http://farm4.static.flickr.com/3031/2605388478_b8ae228aab.jpg" rel="superbox[gallery][my_gallery]"><img src="http://farm4.static.flickr.com/3031/2605388478_b8ae228aab_s.jpg" width="75" height="75" alt="" /></a>
+			</p>
+			<p>Defined dimensions:<br />
+				<a href="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5.jpg" rel="superbox[gallery][my_gallery_2][500x500]"><img src="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5_s.jpg" width="75" height="75" alt="" /></a>
+				<a href="http://farm4.static.flickr.com/3111/2605394848_e11968abaf.jpg" rel="superbox[gallery][my_gallery_2][500x500]"><img src="http://farm4.static.flickr.com/3111/2605394848_e11968abaf_s.jpg" width="75" height="75" alt="" /></a>
+				<a href="http://farm4.static.flickr.com/3031/2605388478_b8ae228aab.jpg" rel="superbox[gallery][my_gallery_2][500x500]"><img src="http://farm4.static.flickr.com/3031/2605388478_b8ae228aab_s.jpg" width="75" height="75" alt="" /></a>
+			</p>
+			
+			<h3>Use</h3>
+			<p>The second parameter will be the gallery's name. All links wearing this name will be part of the same galley.<br /> By default, the dimensions take those of the picture (it's possible to add a padding with css):</p>
+			<pre><code>&lt;a href="http://example.com/picture.png" rel="superbox[gallery][my_gallery]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<p>But it is also possible to specify the dimensions:</p>
+			<pre><code>&lt;a href="http://example.com/picture.png" rel="superbox[gallery][my_gallery][500x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<p>Width only:</p>
+			<pre><code>&lt;a href="http://example.com/picture.png" rel="superbox[gallery][my_gallery][500x]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<p>Height only:</p>
+			<pre><code>&lt;a href="http://example.com/picture.png" rel="superbox[gallery][my_gallery][x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<p>If the picture's height exceeds the box's height, the specified height is ignored.</p>
+		</div>
+		
+		<div id="mode-iframe">
+			<h2>Iframe mode</h2>
+			<p>Generate a box containing an iframe.</p>
+			<h3>Demo</h3>
+			<p><a href="http://www.example.com" rel="superbox[iframe]">Iframe Superbox (auto dimensions)</a></p>
+			<p><a href="http://fr.wikipedia.org/wiki/Special:Page_au_hasard" rel="superbox[iframe.wikipedia][700x500]">Iframe Superbox (defined width)</a></p>
+			<p><a href="http://www.google.fr/news?output=xhtml&amp;source=mobileproducts&amp;hl=fr" rel="superbox[iframe][750x500]">Iframe Superbox (defined dimensions)</a></p>
+			<h3>Use</h3>
+			<pre><code>&lt;a href="http://example.com/" rel="superbox[iframe][700x500]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		</div>
+		
+		<div id="mode-content">
+			<h2>Content mode</h2>
+			<p>Generate a box containing an element of the page.</p>
+			<p>The link will be external, and will point to an element of the page using its <code>id</code> attribute.</p>
+			<p>This element will be copied to appear in Superbox.</p>
+			<h3>Demo</h3>
+			<p><a href="#mode-content" rel="superbox[content]">SuperBox element</a></p>
+			<p><a href="#mode-content" rel="superbox[content][500x400]">SuperBox element (dimensions)</a></p>
+			<h3>Use</h3>
+			<pre><code>&lt;a href="#box-content" rel="superbox[content]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		</div>
+	</div>
+</body>
+</html>

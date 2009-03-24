@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<title>jQuery SuperBox!</title>
-	<link rel="stylesheet" href="demo.css" type="text/css" media="all" />
+	<link rel="stylesheet" href="styles/demo.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="../jquery.superbox.css" type="text/css" media="all" />
 	<style type="text/css">
 		/* Custom Theme */
@@ -33,6 +33,12 @@
 	<div id="container">
 		<h1>jQuery Super<span>Box!</span></h1>
 		
+		<dl class="translations">
+			<dt>Traductions</dt>
+			<dd class="fr"><strong><a href="francais.html" lang="fr">Français</a></strong></dd>
+			<dd class="en"><a href="english.html" lang="en">English</a></dd>
+		</dl>
+		
 		<h2>Introduction</h2>
 		<p><em>jQuery Superbox!</em> est un script permettant d'afficher des fenêtres avec effet <a href="http://en.wikipedia.org/wiki/Lightbox_(JavaScript)">Lightbox</a>.</p>
 		<p>Ce script est un plugin pour jQuery (1.3.x).</p>
@@ -47,7 +53,7 @@
 		
 		<h2>Téléchargement</h2>
 		<p>Le poids de la version compressée de Superbox est de <strong>2ko</strong> si la compression GZip est utilisée, et <strong>5,4ko</strong> sans.</p>
-		<p><strong><a href="jquery-superbox.zip">Télécharger jQuery Superbox! 0.9.0 (zip)</a>
+		<p><strong><a href="http://www.pierrebertet.net/projects/jquery_superbox.zip">Télécharger jQuery Superbox! 0.9.0 (zip)</a>
 </strong></p>
 		
 		<h2>Contribuer</h2>
@@ -64,7 +70,7 @@
 		<p>Les paramètres spécifiques au mode d'affichage seront ensuite placés à la suite, entre crochets.</p>
 		<p>La fenêtre est placée en <code>position:fixed</code>, sauf si sa hauteur dépasse la surface d'affichage. Dans ce cas, elle passera en <code>position:absolute</code>, ce qui permettra de voir toute la zone à l'aide des barres de défilement du navigateur.</p>
 		
-		<p>Pour activer <em>jQuery Superbox!</em>, la méthode $.superbox() doit être executée au chargement de la page :</p>
+		<p>Pour activer <em>jQuery Superbox!</em>, la méthode <code>$.superbox()</code> doit être executée au chargement de la page :</p>
 		<pre><code>$(function(){
 	$.superbox();
 });</code></pre>
@@ -100,7 +106,7 @@
 			<p>Hauteur seulement :</p>
 			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image][x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
 			<p>Si la hauteur de l'image dépasse la hauteur de la box, la hauteur spécifiée n'est pas prise en compte.</p>
-			<p>Si un attribut title existe sur le lien, il sera reporté sur l'image. Sinon, c'est le texte de ce lien qui sera repris pour l'attribut title de l'image.</p>
+			<p>Si un attribut <code>title</code> existe sur le lien, il sera reporté sur l'image. Sinon, c'est le texte de ce lien qui sera repris pour l'attribut <code>title</code> de l'image.</p>
 		</div>
 		
 		<div id="mode-gallery">
@@ -132,24 +138,24 @@
 		</div>
 		
 		<div id="mode-iframe">
-			<h2>Mode iFrame</h2>
+			<h2>Mode iframe</h2>
 			<p>Générer une box contenant une iframe.</p>
 			<h3>Démonstration</h3>
-			<p><a href="http://www.example.com" rel="superbox[iframe]">iFrame Superbox (dimensions auto)</a></p>
-			<p><a href="http://fr.wikipedia.org/wiki/Special:Page_au_hasard" rel="superbox[iframe.wikipedia][700x500]">iFrame Superbox (dimensions définies)</a></p>
-			<p><a href="http://www.google.fr/news?output=xhtml&amp;source=mobileproducts&amp;hl=fr" rel="superbox[iframe][750x500]">iFrame Superbox (dimensions définies)</a></p>
+			<p><a href="http://www.example.com" rel="superbox[iframe]">Iframe Superbox (dimensions auto)</a></p>
+			<p><a href="http://fr.wikipedia.org/wiki/Special:Page_au_hasard" rel="superbox[iframe.wikipedia][700x500]">Iframe Superbox (dimensions définies)</a></p>
+			<p><a href="http://www.google.fr/news?output=xhtml&amp;source=mobileproducts&amp;hl=fr" rel="superbox[iframe][750x500]">Iframe Superbox (dimensions définies)</a></p>
 			<h3>Utilisation</h3>
-			<pre><code>&lt;a href="http://example.com/" rel="superbox[iframe.wikipedia][700x500]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="http://example.com/" rel="superbox[iframe][700x500]"&gt;SuperBox&lt;/a&gt;</code></pre>
 		</div>
 		
 		<div id="mode-content">
 			<h2>Mode contenu</h2>
-			<p>Générer une box contenant un élément de la page</p>
+			<p>Générer une box contenant un élément de la page.</p>
 			<p>Le lien sera interne, et pointera vers un élément de la page à l'aide de son attribut <strong>id</strong>.</p>
-			<p>Cet élément sera copié pour apparaître dans une box.</p>
+			<p>Cet élément sera copié pour apparaître dans Superbox.</p>
 			<h3>Démonstration</h3>
-			<p><a href="#mode-content" rel="superbox[content]">Element SuperBox</a></p>
-			<p><a href="#mode-content" rel="superbox[content][500x400]">Element SuperBox (dimensions)</a></p>
+			<p><a href="#mode-content" rel="superbox[content]">Élément SuperBox</a></p>
+			<p><a href="#mode-content" rel="superbox[content][500x400]">Élément SuperBox (dimensions)</a></p>
 			<h3>Utilisation</h3>
 			<pre><code>&lt;a href="#box-content" rel="superbox[content]"&gt;SuperBox&lt;/a&gt;</code></pre>
 		</div>
