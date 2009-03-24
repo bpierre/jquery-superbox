@@ -47,7 +47,7 @@
 		<p>This script is a plugin for jQuery (1.3.x).</p>
 		<p>Why create a new script of this kind, when <a href="http://planetozh.com/projects/lightbox-clones/">many</a> exist already?</p>
 		<ul>
-			<li><strong>Accessibility</strong>. only the <code>rel</code> attribute is used to launch the script. The <code>href</code> attribute is therefore coherent: he targets the address of a picture, of a page, or an element identifier (anchor).</li>
+			<li><strong>Accessibility</strong>. only the <code>rel</code> attribute is used to launch the script. The <code>href</code> attribute is therefore coherent: it targets the address of a picture, of a page, or an element identifier (anchor).</li>
 			<li><strong>Extensibility</strong>. Superbox doesn't set any style, everything is <strong>easily</strong> and <strong>entirely</strong> CSS stylable.</li>
 			<li>The <strong>MIT license</strong>. this license allows you to use, duplicate, modify, publish, distribute, merge, sell and even change the script license. Your only obligation is to keep the script's author name.</li>
 			<li>It's <strong>fun</strong>.</li>
@@ -63,7 +63,7 @@
 		<p>You want to participate? Don't hesitate to visit the Bittbucket project webpage; there you can <a href="http://bitbucket.org/bpierre/jquery-superbox/issues/">report bugs</a>, suggest improvements and contribute to the code: <a href="http://bitbucket.org/bpierre/jquery-superbox/">http://bitbucket.org/bpierre/jquery-superbox/</a></p>
 		
 		<h2>Getting started</h2>
-		<p>To install this script, you must include on your page <a href="http://jquery.com/">jQuery</a>, and also the files <strong>jquery.superbox-min.js</strong> (minified version) and <strong>jquery.superbox.css</strong>:</p>
+		<p>To install this script, you must include on your page <a href="http://jquery.com/">jQuery</a>, as well as the files <strong>jquery.superbox-min.js</strong> (minified version) and <strong>jquery.superbox.css</strong>:</p>
 		<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;jquery.superbox.css&quot; type=&quot;text/css&quot; media=&quot;all&quot; /&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.superbox-min.js&quot;&gt;&lt;/script&gt;</code></pre>
@@ -76,7 +76,7 @@
 		
 		<p>The windows is placed in <code>position:fixed</code>, except if its height exceeds the display area. In that case, it will go in <code>position:absolute</code>, which will allow to see the whole zone using the browser's scroll bars.</p>
 		
-		<p>To activate <em>jQuery Superbox!</em>, the <code>$.superbox()</code> method must be executed at the page's loading :</p>
+		<p>To activate <em>jQuery Superbox!</em>, the <code>$.superbox()</code> method must be executed at the page's loading:</p>
 		
 		<pre><code>$(function(){
 	$.superbox();
@@ -96,7 +96,7 @@
 		
 		<div id="mode-image">
 			<h2>Picture mode</h2>
-			<p>Display a box containing a picture.</p>
+			<p>Displays a box containing a picture.</p>
 			
 			<h3>Demo</h3>
 			<p><a href="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5.jpg" rel="superbox[image]">Superbox picture (auto dimensions)</a></p>
@@ -146,7 +146,7 @@
 		
 		<div id="mode-iframe">
 			<h2>Iframe mode</h2>
-			<p>Generate a box containing an iframe.</p>
+			<p>Generates a box containing an iframe.</p>
 			<h3>Demo</h3>
 			<p><a href="http://www.example.com" rel="superbox[iframe]">Iframe Superbox (auto dimensions)</a></p>
 			<p><a href="http://fr.wikipedia.org/wiki/Special:Page_au_hasard" rel="superbox[iframe.wikipedia][700x500]">Iframe Superbox (defined width)</a></p>
@@ -157,7 +157,7 @@
 		
 		<div id="mode-content">
 			<h2>Content mode</h2>
-			<p>Generate a box containing an element of the page.</p>
+			<p>Generates a box containing an element of the page.</p>
 			<p>The link will be external, and will point to an element of the page using its <code>id</code> attribute.</p>
 			<p>This element will be copied to appear in Superbox.</p>
 			<h3>Demo</h3>
