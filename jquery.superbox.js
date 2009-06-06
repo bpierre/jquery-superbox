@@ -175,7 +175,7 @@
 			$.superbox["image"]($elt, curSettings, "gallery");
 		},
 		
-		// iFrame
+		// iframe
 		iframe: function($elt, curSettings){
 			
 			// Extra settings
@@ -193,7 +193,7 @@
 					// Dimensions
 					var dims = false,
 					
-					// iFrame
+					// iframe
 					$iframe;
 					
 					if (extraSettings) {
@@ -205,10 +205,10 @@
 						boxHeight: dims[1] || curSettings.boxHeight
 					});
 					
-					// iFrame
+					// iframe
 					$iframe = $('<iframe src="'+ $elt.attr("href") +'" name="'+ $elt.attr("href") +'" frameborder="0" scrolling="auto" hspace="0" width="'+ curSettings.boxWidth +'" height="'+ curSettings.boxHeight +'"></iframe>');
 					
-					// On iFrame load
+					// On iframe load
 					$iframe.load(function(){
 						
 						// Specified dimensions
@@ -251,12 +251,11 @@
 						boxHeight: dims[1] || curSettings.boxHeight
 					});
 					
-					
 					// Specified dimensions
 					$superbox.width( curSettings.boxWidth+"px" );
 					$innerbox.height( curSettings.boxHeight+"px" );
 					
-					$($elt.attr('href')).clone().appendTo($innerbox);
+					$($elt.attr('href')).clone().appendTo($innerbox).show();
 					
 					// Id and Classes
 					setBoxAttrs({boxClasses: "content " + curSettings.boxClasses, boxId: curSettings.boxId});

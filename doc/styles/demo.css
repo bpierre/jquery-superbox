@@ -16,4 +16,4 @@ img{border:0}
 .translations dd a{float:right;padding-right:20px;line-height:19px;text-align:right;background:url(flags.png) no-repeat 100% 0;}
 .translations dd strong a{text-decoration:none;}
 .translations dd.en a{background-position:100% -19px;}
-.translated-by{clear:right;float:right;width:150px;margin:20px 0 0;padding:10px;text-align:justify;border:1px solid #fa6900;}
+.translated-by{position:absolute;top:46px;right:35px;width:150px;padding:10px;text-align:justify;background:#fff;border:1px solid #fa6900;}

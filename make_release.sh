@@ -75,4 +75,11 @@ mv ${www_dir}/index-tmp.html ${www_dir}/index.html
 sed -e 's/\.\.\/jquery\.superbox\.css/jquery.superbox.css/' ${www_dir}/francais.html > ${www_dir}/francais-tmp.html
 mv ${www_dir}/francais-tmp.html ${www_dir}/francais.html
 
+
+sed -e 's/english\.html/index.html/' ${www_dir}/index.html > ${www_dir}/index-tmp.html
+mv ${www_dir}/index-tmp.html ${www_dir}/index.html
+
+sed -e 's/english\.html/index.html/' ${www_dir}/francais.html > ${www_dir}/francais-tmp.html
+mv ${www_dir}/francais-tmp.html ${www_dir}/francais.html
+
 echo "Terminé."
