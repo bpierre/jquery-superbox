@@ -52,8 +52,8 @@
 	// Dispatch types
 	function dispatch(){
 		
-		// Match all a[rel^=superbox]
-		$("a[rel^=superbox]").each(function(){
+		// Match all superbox links
+		$("a[rel^=superbox],area[rel^=superbox]").each(function(){
 			
 			// Optimisation
 			var $this = $(this),
