@@ -49,7 +49,7 @@
 			<li>La <strong>licence MIT</strong>. Cette licence vous permet d'utiliser, de dupliquer, de modifier, de publier, de diffuser, de fusionner, de vendre et même de changer la licence de ce script. Votre seule obligation est de conserver le nom de l'auteur de ce script.</li>
 			<li>C'est <strong>amusant</strong>.</li>
 		</ul>
-		<p><em>jQuery Superbox!</em> permet d'afficher des <a href="#mode-image">images</a>, des <a href="#mode-gallery">galeries d'images</a>, des <a href="#mode-iframe">pages externes</a>, ou même <a href="#mode-content">un élément de la page</a>.</p>
+		<p><em>jQuery Superbox!</em> permet d'afficher des <a href="#mode-image">images</a>, des <a href="#mode-gallery">galeries d'images</a>, des <a href="#mode-iframe">pages externes</a>, un <a href="#mode-content">élément de la page</a> et même un <a href="#mode-content">contenu chargé en AJAX</a>.</p>
 		
 		<h2>Téléchargement</h2>
 		<p>Le poids de la version compressée de Superbox est de <strong>2ko</strong> si la compression GZip est utilisée, et <strong>5,4ko</strong> sans.</p>
@@ -62,7 +62,7 @@
 		<h2>Mise en route</h2>
 		<p>Pour installer ce script, vous devez inclure sur votre page <a href="http://jquery.com/">jQuery</a>, ainsi que les fichiers <strong>jquery.superbox-min.js</strong> (version compressée) et <strong>jquery.superbox.css</strong> :</p>
 		<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;jquery.superbox.css&quot; type=&quot;text/css&quot; media=&quot;all&quot; /&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;jquery-min.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.superbox-min.js&quot;&gt;&lt;/script&gt;</code></pre>
 		
 		<p>Par défaut, la superbox est générée d'après l'attribut <code>rel</code> d'un lien. Il doit contenir le mot <code>superbox</code>, suivi du mode d'affichage entre crochets : <code>rel="superbox[<strong>mode_affichage</strong>]"</code>.</p>
@@ -150,7 +150,7 @@
 		<div id="mode-content">
 			<h2>Mode contenu</h2>
 			<p>Générer une box contenant un élément de la page.</p>
-			<p>Le lien sera interne, et pointera vers un élément de la page à l'aide de son attribut <strong>id</strong>.</p>
+			<p>Le lien sera interne, et pointera vers un élément de la page à l'aide de son attribut <code>id</code>.</p>
 			<p>Cet élément sera copié pour apparaître dans Superbox.</p>
 			<h3>Démonstration</h3>
 			<p><a href="#mode-content" rel="superbox[content]">Élément SuperBox</a></p>
@@ -158,6 +158,18 @@
 			<h3>Utilisation</h3>
 			<pre><code>&lt;a href="#box-content" rel="superbox[content]"&gt;SuperBox&lt;/a&gt;</code></pre>
 		</div>
+		
+		<div id="mode-ajax">
+			<h2>Mode AJAX</h2>
+			<p>Générer une box contenant un fragment HTML chargé en AJAX.</p>
+			<p>Le lien pointe vers un document HTML complet (version non intrusive), tandis que l'URL de l'appel AJAX se trouve dans le second paramètre.</p>
+			<h3>Démonstration</h3>
+			<p><a href="crockford.html" rel="superbox[ajax][crockford-ajax.html]">AJAX SuperBox</a></p>
+			<p><a href="crockford.html" rel="superbox[ajax][crockford-ajax.html][500x400]">AJAX SuperBox (dimensions)</a></p>
+			<h3>Utilisation</h3>
+			<pre><code>&lt;a href="#box-content" rel="superbox[content]"&gt;SuperBox&lt;/a&gt;</code></pre>
+		</div>
+		
 	</div>
 </body>
 </html>

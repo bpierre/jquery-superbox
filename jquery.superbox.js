@@ -1,10 +1,9 @@
 /*
- * jQuery SuperBox! 0.9.0
+ * jQuery SuperBox! 0.9.1
  * Copyright (c) 2009 Pierre Bertet (pierrebertet.net)
  * Licensed under the MIT (MIT-LICENSE.txt)
  *
  * TODO :
- * - Ajax
  * - Document.load if init is before </body> against IE crash.
  * - Animations
  * - Image / Gallery mode : display a legend
@@ -24,7 +23,8 @@
 		loadTxt: "Loading...",
 		closeTxt: "Close",
 		prevTxt: "Previous",
-		nextTxt: "Next"
+		nextTxt: "Next",
+		beforeShow: function(){}
 	},
 	
 	galleryGroups = {},
@@ -420,7 +420,7 @@
 	};
 	
 	// Display box
-	function showBox(){
+	function showBox(curSettings, $elt){
 		// Stop "Loading..."
 		$loading.hide();
 		
@@ -452,6 +452,8 @@
 			$wrapper.css({position: "absolute", top: ($wrapper.offset().top + 10) + "px"});
 		}
 		
+		settings.beforeShow();
+		
 		$superbox.fadeTo(300,1);
 		
 	};
@@ -459,7 +461,7 @@
 	// Create base elements (overlay, wrapper, box, loading)
 	function createElements(){
 		if (!$.superbox.elementsReady){
-		
+		    
 			// Overlay (background)
 			$overlay = $('<div id="superbox-overlay"></div>').appendTo("body").hide();
 			
