@@ -69,9 +69,13 @@
 			newBoxId = settings.boxId,
 			newBoxClasses = settings.boxClasses;
 			
+			// Prevent multiple inits
+			if ($this.data("superbox_init")) { return; }
+			$this.data("superbox_init", true);
+			
 			// Additionnal rel settings
 			this._relSettings = relAttr.replace("superbox["+ type + boxCurrentAttrs.join("") +"]", "");
-            
+			
 			// Redefine settings
 			$.each(boxCurrentAttrs, function(i, val) { // each class or id
 				if (val.substr(0,1) == "#") {
