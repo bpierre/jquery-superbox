@@ -8,10 +8,10 @@
  * - Animations
  * - Image / Gallery mode : display a legend
 */
-;(function($){
+;(function($) {
 	
 	// Local variables
-	var $overlay, $wrapper, $container, $superbox, $closeBtn, $loading, $nextprev, $nextBtn, $prevBtn, settings,
+	var $curLink, $overlay, $wrapper, $container, $superbox, $closeBtn, $loading, $nextprev, $nextBtn, $prevBtn, settings,
 	
 	// Default settings
 	defaultSettings = {
@@ -32,13 +32,13 @@
 	hideElts = $([]);
 	
 	// Init dispatcher
-	$.superbox = function(){
+	$.superbox = function() {
 		
 		// Settings
 		settings = $.extend({}, defaultSettings, $.superbox.settings);
 		
 		// If IE6, select elements to hide
-		if ($.browser.msie && $.browser.version < 7){
+		if ($.browser.msie && $.browser.version < 7) {
 			hideElts = hideElts.add("select");
 		}
 		
@@ -50,10 +50,10 @@
 	};
 	
 	// Dispatch types
-	function dispatch(){
+	function dispatch() {
 		
 		// Match all superbox links
-		$("a[rel^=superbox],area[rel^=superbox]").each(function(){
+		$("a[rel^=superbox],area[rel^=superbox]").each(function() {
 			
 			// Optimisation
 			var $this = $(this),
@@ -73,11 +73,11 @@
 			this._relSettings = relAttr.replace("superbox["+ type + boxCurrentAttrs.join("") +"]", "");
             
 			// Redefine settings
-			$.each(boxCurrentAttrs, function(i, val){ // each class or id
-				if (val.substr(0,1) == "#"){
+			$.each(boxCurrentAttrs, function(i, val) { // each class or id
+				if (val.substr(0,1) == "#") {
 					newBoxId = val.substr(1);
-				}
-				else if (val.substr(0,1) == "."){
+					
+				} else if (val.substr(0,1) == ".") {
 					newBoxClasses += " " + val.substr(1);
 				}
 			});
@@ -90,38 +90,45 @@
 	};
 	
 	/*-- Superbox Method --*/
-	$.fn.superbox = function(type, curSettings){
+	$.fn.superbox = function(type, curSettings) {
 		curSettings = $.extend({}, settings, curSettings);
 		$.superbox[type](this, curSettings);
+		
+	    this.click(function(e) {
+	        e.preventDefault();
+	        $curLink = this;
+	    });
 	};
 	
 	/*-- Types --*/
 	$.extend($.superbox, {
 		
 		// Image
-		image: function($elt, curSettings, type){
-			
+		image: function($elt, curSettings, type) {
+            
 			var relSettings = getRelSettings($elt.get(0)),
 			dimensions = false;
 			
 			// Extra settings
-			if (relSettings && type == "gallery")
-				dimensions = relSettings[1];
-			else if (relSettings)
-				dimensions = relSettings[0];
+			if (relSettings && type == "gallery") {
+			    dimensions = relSettings[1];
+			    
+			} else if (relSettings) {
+			    dimensions = relSettings[0];
+		    }
 			
 			// On click event
-			$elt.click(function(e){
-				e.preventDefault();
+			$elt.click(function() {
 				
 				prepareBox();
 				
 				// "Prev / Next" buttons
-				if (type == "gallery")
-					nextPrev($elt, relSettings[0]);
+				if (type === "gallery") {
+				    nextPrev($elt, relSettings[0]);
+				}
 				
 				// Loading anim
-				initLoading(function(){
+				initLoading(function() {
 					
 					// Dimensions
 					var dims = false,
@@ -137,7 +144,7 @@
 					$curImg = $('<img src="'+ $elt.attr("href") +'" title="'+ ($elt.attr("title") || $elt.text()) +'" />');
 					
 					// On image load
-					$curImg.load(function(){
+					$curImg.load(function() {
 						
 						// Resize
 						resizeImageBox($curImg, dims);
@@ -156,7 +163,7 @@
 		},
 		
 		// Gallery
-		gallery: function($elt, curSettings){
+		gallery: function($elt, curSettings) {
 			
 			// Extra settings
 			var extraSettings = getRelSettings($elt.get(0));
@@ -169,26 +176,25 @@
 			// Add element to current group
 			galleryGroups[extraSettings[0]].push($elt);
 			
-			$elt.get(0)._superboxGroupKey = (galleryGroups[extraSettings[0]].length - 1);
+			$elt.data("superboxGroupKey", galleryGroups[extraSettings[0]].length - 1);
 			
 			// Image Box
 			$.superbox["image"]($elt, curSettings, "gallery");
 		},
 		
 		// iframe
-		iframe: function($elt, curSettings){
+		iframe: function($elt, curSettings) {
 			
 			// Extra settings
 			var extraSettings = getRelSettings($elt.get(0));
 			
 			// On click event
-			$elt.click(function(e){
-				e.preventDefault();
-				
+			$elt.click(function() {
+			    
 				prepareBox();
 				
 				// Loading anim
-				initLoading(function(){
+				initLoading(function() {
 					
 					// Dimensions
 					var dims = false,
@@ -209,7 +215,9 @@
 					$iframe = $('<iframe src="'+ $elt.attr("href") +'" name="'+ $elt.attr("href") +'" frameborder="0" scrolling="auto" hspace="0" width="'+ curSettings.boxWidth +'" height="'+ curSettings.boxHeight +'"></iframe>');
 					
 					// On iframe load
-					$iframe.load(function(){
+					$iframe.load(function() {
+						
+						$iframe.unbind("load");
 						
 						// Specified dimensions
 						$superbox.width( curSettings.boxWidth+"px" );
@@ -228,18 +236,17 @@
 		},
 		
 		// Content
-		content: function($elt, curSettings){
+		content: function($elt, curSettings) {
 			// Extra settings
 			var extraSettings = getRelSettings($elt.get(0));
 			
 			// On click event
-			$elt.click(function(e){
-				e.preventDefault();
-				
+			$elt.click(function() {
+			    
 				prepareBox();
 				
 				// Loading anim
-				initLoading(function(){
+				initLoading(function() {
 					
 					// Dimensions
 					var dims = false;
@@ -268,19 +275,18 @@
 		},
 		
 		// Ajax
-		ajax: function($elt, curSettings){
+		ajax: function($elt, curSettings) {
 			
 			// Extra settings
 			var extraSettings = getRelSettings($elt.get(0));
 			
 			// On click event
-			$elt.click(function(e){
-				e.preventDefault();
+			$elt.click(function() {
 				
 				prepareBox();
 				
 				// Loading anim
-				initLoading(function(){
+				initLoading(function() {
 					
 					// Dimensions
 					var dims = false;
@@ -298,7 +304,7 @@
 					$superbox.width( curSettings.boxWidth+"px" );
 					$innerbox.height( curSettings.boxHeight+"px" );
 					
-					$.get( extraSettings[2], function(data){
+					$.get( extraSettings[2], function(data) {
 						$(data).appendTo($innerbox);
 					});
 					
@@ -314,12 +320,12 @@
 	
 	
 	// Get extra settings in rel attribute
-	function getRelSettings(elt){
+	function getRelSettings(elt) {
 		return elt._relSettings.match(/([^\[\]]+)/g);
 	};
 	
 	// Set image box dimensions
-	function resizeImageBox($curImg, dims){
+	function resizeImageBox($curImg, dims) {
 		
 		// Auto
 		$superbox.width($curImg.width() + ($innerbox.css("paddingLeft").slice(0,-2)-0) + ($innerbox.css("paddingRight").slice(0,-2)-0)); // Padding ajouté, pour corriger le problème de définition padding sur $innerbox
@@ -335,40 +341,43 @@
 	};
 	
 	// Next / Previous
-	function nextPrev($elt, group){
+	function nextPrev($elt, group) {
 		$nextprev.show();
 		
 		galleryMode = true;
 		
-		var nextKey = $elt.get(0)._superboxGroupKey + 1,
+		var nextKey = $elt.data("superboxGroupKey") + 1,
 		    prevKey = nextKey - 2;
 		
 		// Next
-		if (galleryGroups[group][nextKey]){
-			$nextBtn.removeClass("disabled").unbind("click").bind("click", function(){
+		if (galleryGroups[group][nextKey]) {
+			$nextBtn.removeClass("disabled").unbind("click").bind("click", function() {
 				galleryGroups[group][nextKey].click();
 			});
 		}
-		else
-			$nextBtn.addClass("disabled").unbind("click");
+		else {
+		    $nextBtn.addClass("disabled").unbind("click");
+		}
 		
 		// Prev
-		if (galleryGroups[group][prevKey]){
-			$prevBtn.removeClass("disabled").unbind("click").bind("click", function(){
+		if (galleryGroups[group][prevKey]) {
+			$prevBtn.removeClass("disabled").unbind("click").bind("click", function() {
 				galleryGroups[group][prevKey].click();
 			});
 		}
-		else
-			$prevBtn.addClass("disabled").unbind("click");
+		else {
+		    $prevBtn.addClass("disabled").unbind("click");
+		}
 	};
 	
 	// Set ID and Class
-	function setBoxAttrs(attrs){
+	function setBoxAttrs(attrs) {
 		$superbox.attr("id", attrs.boxId).attr("class", attrs.boxClasses);
 	};
 	
 	// Hide Box
-	function hideBox(){
+	function hideBox() {
+	    $curLink.focus();
 		$(document).unbind("keydown");
 		$loading.hide();
 		$nextprev.hide();
@@ -377,9 +386,10 @@
 	};
 	
 	// Hide Box + Overlay
-	function hideAll(callback){
+	function hideAll(callback) {
+	    
 		hideBox();
-		$overlay.fadeOut(300, function(){
+		$overlay.fadeOut(300, function() {
 			// Show hidden elements for IE6
 			hideElts.show();
 		});
@@ -387,12 +397,21 @@
 	};
 	
 	// "Loading..."
-	function initLoading(callback){
+	function initLoading(callback) {
 		
-		var loading = function(){
+		// Keys shortcuts
+		$(document).bind("keydown",function(e) {
+		    
+		    // Escape
+			if (e.keyCode == 27) {
+			    hideAll();
+			}
+		});
+		
+		var loading = function() {
 			
 			// IE6
-			if($.browser.msie && $.browser.version < 7){
+			if($.browser.msie && $.browser.version < 7) {
 				$wrapper.css({position: "absolute", top:"50%"});
 			}
 			
@@ -403,7 +422,7 @@
 			callback();
 		};
 		
-		if (galleryMode){
+		if (galleryMode) {
 			$overlay.css("opacity", settings.overlayOpacity).show();
 			loading();
 		}
@@ -413,54 +432,55 @@
 	};
 	
 	// "Prepare" box : Show $superbox with top:-99999px;
-	function prepareBox(){
+	function prepareBox() {
 		$wrapper.show();
 		$innerbox.empty();
 		$superbox.css({position: "absolute", top: "-99999px"});
 	};
 	
 	// Display box
-	function showBox(curSettings, $elt){
+	function showBox() {
 		// Stop "Loading..."
 		$loading.hide();
 		
 		// Keys shortcuts
-		$(document).unbind("keydown").bind("keydown",function(e){
-			// Escape
-			if (e.keyCode == 27)
-				hideAll();
+		$(document).bind("keydown",function(e) {
+		    
 			// Left/right arrows
-			if (e.keyCode == 39 && $nextBtn.is(":visible"))
-				$nextBtn.click();
-			if (e.keyCode == 37 && $prevBtn.is(":visible"))
-				$prevBtn.click();
+			if (e.keyCode == 39 && $nextBtn.is(":visible")) {
+			    $nextBtn.click();
+			    
+			} else if (e.keyCode == 37 && $prevBtn.is(":visible")) {
+			    $prevBtn.click();
+			}
 		});
 		
 		// Show $superbox
 		$superbox.css({position: "static", top: 0, opacity: 0});
 		
 		// IE6 and IE7
-		if ($.browser.msie && $.browser.version < 8){
+		if ($.browser.msie && $.browser.version < 8) {
 			$superbox.css({position: "relative", top:"-50%"});
-		// IE6
-		if ($.browser.msie && $.browser.version < 7)
-			$wrapper.css({position: "absolute", top:"50%"});
+			
+		    // IE6
+		    if ($.browser.msie && $.browser.version < 7) {
+		        $wrapper.css({position: "absolute", top:"50%"});
+		    }
 		}
 		
 		// Position absolute if image height > window height
-		if ( $(window).height() < $wrapper.height() ){
+		if ( $(window).height() < $wrapper.height() ) {
 			$wrapper.css({position: "absolute", top: ($wrapper.offset().top + 10) + "px"});
 		}
 		
 		settings.beforeShow();
 		
-		$superbox.fadeTo(300,1);
-		
+		$superbox.fadeTo(300,1).focus();
 	};
 	
 	// Create base elements (overlay, wrapper, box, loading)
-	function createElements(){
-		if (!$.superbox.elementsReady){
+	function createElements() {
+		if (!$.superbox.elementsReady) {
 		    
 			// Overlay (background)
 			$overlay = $('<div id="superbox-overlay"></div>').appendTo("body").hide();
@@ -472,7 +492,7 @@
 			$container = $('<div id="superbox-container"></div>').appendTo($wrapper);
 			
 			// Box
-			$superbox = $('<div id="superbox"></div>').appendTo($container);
+			$superbox = $('<div id="superbox" tabindex="0"></div>').appendTo($container);
 			
 			// Inner box
 			$innerbox = $('<div id="superbox-innerbox"></div>').appendTo($superbox);
@@ -489,12 +509,12 @@
 			$loading = $('<p class="loading">'+ settings.loadTxt +'</p>').appendTo($container).hide();
 			
 			// Hide on click
-			$overlay.add($wrapper).add($closeBtn).click(function(){
+			$overlay.add($wrapper).add($closeBtn).click(function() {
 				hideAll();
 			});
 			
 			// Remove "hide on click" on superbox
-			$superbox.click(function(e){
+			$superbox.click(function(e) {
 				e.stopPropagation();
 			});
 			

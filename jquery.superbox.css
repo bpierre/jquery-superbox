@@ -17,7 +17,7 @@
 /* Default Theme */
 #superbox-overlay{background:#000;}
 #superbox-container .loading{text-align:center;font-size:40px;color:#fff;}
-#superbox{padding:10px;background:#fff;}
+#superbox{padding:10px;background:#fff;outline:0;}
 #superbox-innerbox{padding:10px 0;}
 #superbox.image{text-align:center;}
 #superbox .close,
