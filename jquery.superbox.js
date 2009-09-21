@@ -1,5 +1,5 @@
 /*
- * jQuery SuperBox! 0.9.1
+ * jQuery SuperBox! 0.9.2-dev
  * Copyright (c) 2009 Pierre Bertet (pierrebertet.net)
  * Licensed under the MIT (MIT-LICENSE.txt)
  *
@@ -503,11 +503,11 @@
 			
 			// "Next / Previous"
 			$nextprev = $('<p class="nextprev"></p>').appendTo($superbox).hide();
-			$prevBtn = $('<a class="prev"><strong><span>'+ settings.prevTxt +'</span></strong></a>').appendTo($nextprev);
-			$nextBtn = $('<a class="next"><strong><span>'+ settings.nextTxt +'</span></strong></a>').appendTo($nextprev);
+			$prevBtn = $('<a class="prev" tabindex="0" role="button"><strong><span>'+ settings.prevTxt +'</span></strong></a>').appendTo($nextprev);
+			$nextBtn = $('<a class="next" tabindex="0" role="button"><strong><span>'+ settings.nextTxt +'</span></strong></a>').appendTo($nextprev);
 			
 			// Add close button
-			$closeBtn = $('<p class="close"><a><strong><span>'+ settings.closeTxt +'</span></strong></a></p>').prependTo($superbox).find("a");
+			$closeBtn = $('<p class="close"><a tabindex="0" role="button"><strong><span>'+ settings.closeTxt +'</span></strong></a></p>').prependTo($superbox).find("a");
 			
 			// "Loading..."
 			$loading = $('<p class="loading">'+ settings.loadTxt +'</p>').appendTo($container).hide();
