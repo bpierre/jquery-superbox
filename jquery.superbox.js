@@ -24,7 +24,8 @@
 		closeTxt: "Close",
 		prevTxt: "Previous",
 		nextTxt: "Next",
-		beforeShow: function(){}
+		beforeShow: function(){},
+		afterShow: function(){}
 	},
 	
 	galleryGroups = {},
@@ -484,7 +485,9 @@
 		
 		settings.beforeShow();
 		
-		$superbox.fadeTo(300,1).focus();
+		$superbox.fadeTo(300,1, function(){
+            settings.afterShow();
+		}).focus();
 	};
 	
 	// Create base elements (overlay, wrapper, box, loading)
