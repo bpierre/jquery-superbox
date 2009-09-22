@@ -59,11 +59,14 @@
 			var $this = $(this),
 			relAttr = $this.attr("rel"),
 			
-			// Match type (ex : superbox[gallery#my_id.my_class][my_gallery] > gallery
-			type = relAttr.match(/^superbox\[([^#\.\]]+)/)[1],
+			// Match first argument. Ex: superbox[gallery#my_id.my_class][my_gallery] > gallery#my_id.my_class
+			firstArg = relAttr.match(/^superbox\[([^\]]+)\]/)[1],
+			
+			// Match type. Ex: superbox[gallery#my_id.my_class][my_gallery] > gallery
+			type = firstArg.match(/^([^#\.]+)/)[1],
 			
 			// Match additionnal classes or IDs (#xxx.yyy.zzz)
-			boxCurrentAttrs = relAttr.replace("superbox", "").match(/([#\.][^#\.\]]+)/g) || [],
+			boxCurrentAttrs = firstArg.replace(type, "").match(/([#\.][^#\.\]]+)/g) || [],
 			
 			// Box ID and classes
 			newBoxId = settings.boxId,
@@ -254,8 +257,9 @@
 					
 					// Dimensions
 					var dims = false;
-					if (extraSettings)
+					if (extraSettings) {
 						dims = extraSettings[0].split("x");
+					}
 					
 					curSettings = $.extend({}, curSettings, {
 						boxWidth: dims[0] || curSettings.boxWidth,
@@ -294,8 +298,8 @@
 					
 					// Dimensions
 					var dims = false;
-					if (extraSettings && extraSettings[3]) {
-						dims = extraSettings[3].split("x");
+					if (extraSettings && extraSettings[1]) {
+						dims = extraSettings[1].split("x");
 					}
 					
 					// Extend default dimension settings
@@ -308,7 +312,7 @@
 					$superbox.width( curSettings.boxWidth+"px" );
 					$innerbox.height( curSettings.boxHeight+"px" );
 					
-					$.get( extraSettings[2], function(data) {
+					$.get( extraSettings[0], function(data) {
 						$(data).appendTo($innerbox);
 					});
 					
@@ -346,6 +350,7 @@
 	
 	// Next / Previous
 	function nextPrev($elt, group) {
+		
 		$nextprev.show();
 		
 		galleryMode = true;
@@ -382,7 +387,7 @@
 	// Hide Box
 	function hideBox() {
 	    $curLink.focus();
-		$(document).unbind("keydown");
+		$(document).unbind("keydown.superbox");
 		$loading.hide();
 		$nextprev.hide();
 		$wrapper.hide().css({position: "fixed", top: 0});
@@ -404,7 +409,7 @@
 	function initLoading(callback) {
 		
 		// Keys shortcuts
-		$(document).bind("keydown",function(e) {
+		$(document).bind("keydown.superbox",function(e) {
 		    
 		    // Escape
 			if (e.keyCode == 27) {
@@ -448,7 +453,7 @@
 		$loading.hide();
 		
 		// Keys shortcuts
-		$(document).bind("keydown",function(e) {
+		$(document).unbind("keydown.superbox.np").bind("keydown.superbox.np",function(e) {
 		    
 			// Left/right arrows
 			if (e.keyCode == 39 && $nextBtn.is(":visible")) {
