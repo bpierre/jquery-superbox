@@ -1,11 +1,11 @@
 body{padding:0;margin:0;font:12px Arial, Helvetica, sans-serif;color:#333;background:#e0e4cc;}
 a{color:#fa6900;}
-#container{position:relative;overflow:hidden;width:820px;margin:0 auto;padding:0 20px 50px;background:#fff;}
+#container{position:relative;overflow:hidden;width:820px;margin:0 auto;padding:0 20px 10px;background:#fff;}
 h1{float:left;margin:20px 0 10px;padding:0;line-height:30px;font-size:24px;}
 h1 span{color:#69d2e7;}
 h2{clear:both;margin:0 0 14px;padding:40px 5px 5px;line-height:18px;font-family:Georgia, Helvetica, sans-serif;font-style:italic;font-size:18px;border-bottom:3px solid #fa6900;zoom:1;}
 h3{clear:left;font-size:16px;}
-pre{overflow:auto;padding:5px;background:#a7dbd8;}
+pre{overflow:auto;margin:10px 0;padding:5px;background:#a7dbd8;}
 code{background:#a7dbd8;}
 pre code{font:12px monospace;}
 ul{list-style-type:square;}
@@ -21,6 +21,7 @@ cite{float:right;margin-right:40px;display:inline;}
 .translations dd strong a{text-decoration:none;}
 .translations dd.en a{background-position:100% -19px;}
 .translated-by p{position:absolute;top:58px;right:35px;width:150px;margin:0;padding:10px;text-align:justify;background:#fff;border:1px solid #fa6900;}
+#page-footer{margin-top:80px;padding-top:10px;text-align:center;border-top:1px solid #fa6900;}
 
 /* SuperBox! custom theme */
 #superbox-overlay{background:#e0e4cc;}
