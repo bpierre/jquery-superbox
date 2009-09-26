@@ -334,7 +334,10 @@
 					showBox();
 				});
 			});
-		}
+		},
+		
+		// Close SuperBox!
+		close: hideAll
 	});
 	
 	
