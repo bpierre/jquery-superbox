@@ -313,8 +313,18 @@
 					$superbox.width( curSettings.boxWidth+"px" );
 					$innerbox.height( curSettings.boxHeight+"px" );
 					
-					$.get( extraSettings[0], function(data) {
-						$(data).appendTo($innerbox);
+					var splitUrl = extraSettings[0].split("#");
+					var ajaxUrl = splitUrl[0];
+					var anchor = splitUrl[1] || false;
+					
+					$.get( ajaxUrl, function(data) {
+					    
+					    // Get a specific element (by ID)?
+					    if (anchor !== false) {
+					        data = $(data).find("#" + anchor);
+				        }
+				        
+					    $(data).appendTo($innerbox);
 					});
 					
 					// Id and Classes
@@ -495,22 +505,22 @@
 		if (!$.superbox.elementsReady) {
 		    
 			// Overlay (background)
-			$overlay = $('<div id="superbox-overlay"></div>').appendTo("body").hide();
+			$overlay = $('<div id="superbox-overlay"/>').appendTo("body").hide();
 			
 			// Wrapper
-			$wrapper = $('<div id="superbox-wrapper"></div>').appendTo("body").hide();
+			$wrapper = $('<div id="superbox-wrapper"/>').appendTo("body").hide();
 			
 			// Box container
-			$container = $('<div id="superbox-container"></div>').appendTo($wrapper);
+			$container = $('<div id="superbox-container"/>').appendTo($wrapper);
 			
 			// Box
-			$superbox = $('<div id="superbox" tabindex="0"></div>').appendTo($container);
+			$superbox = $('<div id="superbox" tabindex="0"/>').appendTo($container);
 			
 			// Inner box
-			$innerbox = $('<div id="superbox-innerbox"></div>').appendTo($superbox);
+			$innerbox = $('<div id="superbox-innerbox"/>').appendTo($superbox);
 			
 			// "Next / Previous"
-			$nextprev = $('<p class="nextprev"></p>').appendTo($superbox).hide();
+			$nextprev = $('<p class="nextprev"/>').appendTo($superbox).hide();
 			$prevBtn = $('<a class="prev" tabindex="0" role="button"><strong><span>'+ settings.prevTxt +'</span></strong></a>').appendTo($nextprev);
 			$nextBtn = $('<a class="next" tabindex="0" role="button"><strong><span>'+ settings.nextTxt +'</span></strong></a>').appendTo($nextprev);
 			

@@ -21,3 +21,11 @@ cite{float:right;margin-right:40px;display:inline;}
 .translations dd strong a{text-decoration:none;}
 .translations dd.en a{background-position:100% -19px;}
 .translated-by p{position:absolute;top:58px;right:35px;width:150px;margin:0;padding:10px;text-align:justify;background:#fff;border:1px solid #fa6900;}
+
+/* SuperBox! custom theme */
+#superbox-overlay{background:#e0e4cc;}
+#superbox-container .loading{width:32px;height:32px;margin:0 auto;text-indent:-9999px;background:url(loader.gif) no-repeat 0 0;}
+#superbox .close a{float:right;padding:0 5px;line-height:20px;background:#333;cursor:pointer;}
+#superbox .close a span{color:#fff;}
+#superbox .nextprev a{float:left;margin-right:5px;padding:0 5px;line-height:20px;background:#333;cursor:pointer;color:#fff;}
+#superbox .nextprev .disabled{background:#ccc;cursor:default;}

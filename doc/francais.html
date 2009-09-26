@@ -4,17 +4,8 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 	<title>jQuery SuperBox!</title>
-	<link rel="stylesheet" href="styles/demo.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="../jquery.superbox.css" type="text/css" media="all" />
-	<style type="text/css">
-		/* Custom Theme */
-		#superbox-overlay{background:#e0e4cc;}
-		#superbox-container .loading{width:32px;height:32px;margin:0 auto;text-indent:-9999px;background:url(styles/loader.gif) no-repeat 0 0;}
-		#superbox .close a{float:right;padding:0 5px;line-height:20px;background:#333;cursor:pointer;}
-		#superbox .close a span{color:#fff;}
-		#superbox .nextprev a{float:left;margin-right:5px;padding:0 5px;line-height:20px;background:#333;cursor:pointer;color:#fff;}
-		#superbox .nextprev .disabled{background:#ccc;cursor:default;}
-	</style>
+	<link rel="stylesheet" href="styles/demo.css" type="text/css" media="all" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 	<script type="text/javascript" src="../jquery.superbox.js"></script>
 	<script type="text/javascript">
@@ -45,15 +36,15 @@
 		<p>Pourquoi créer un nouveau script de ce type, alors qu'il en existe déjà <a href="http://planetozh.com/projects/lightbox-clones/" title="Clones de Lightboxes">beaucoup</a> ?</p>
 		<ul>
 			<li>L'<strong>accessibilité</strong>. Seul l'attribut <code>rel</code> est utilisé pour déclencher le script. L'attribut <code>href</code> est donc cohérent : il cible l'adresse d'une image, celle d'une page ou l'identifiant d'un élément de la page (ancre).</li>
-			<li>L'<strong>extensibilité</strong>. Superbox n'impose aucun style, tout est <strong>entièrement</strong> et <strong>facilement</strong> stylable en CSS.</li>
+			<li>L'<strong>extensibilité</strong>. SuperBox! n'impose aucun style, tout est <strong>entièrement</strong> et <strong>facilement</strong> stylable en CSS.</li>
 			<li>La <strong>licence MIT</strong>. Cette licence vous permet d'utiliser, de dupliquer, de modifier, de publier, de diffuser, de fusionner, de vendre et même de changer la licence de ce script. Votre seule obligation est de conserver le nom de l'auteur de ce script.</li>
 			<li>C'est <strong>amusant</strong>.</li>
 		</ul>
-		<p><em>jQuery Superbox!</em> permet d'afficher des <a href="#mode-image">images</a>, des <a href="#mode-gallery">galeries d'images</a>, des <a href="#mode-iframe">pages externes</a>, un <a href="#mode-content">élément de la page</a> et même un <a href="#mode-ajax">contenu chargé en AJAX</a>.</p>
+		<p><em>jQuery SuperBox!</em> permet d'afficher des <a href="#mode-image">images</a>, des <a href="#mode-gallery">galeries d'images</a>, des <a href="#mode-iframe">pages externes</a>, un <a href="#mode-content">élément de la page</a> et même un <a href="#mode-ajax">contenu chargé en AJAX</a>.</p>
 		
 		<h2>Téléchargement</h2>
-		<p>Le poids de la version compressée de Superbox est de <strong>2ko</strong> si la compression GZip est utilisée, et <strong>5,4ko</strong> sans.</p>
-		<p><strong><a href="http://www.pierrebertet.net/projects/jquery_superbox/jquery-superbox-0.9.1.zip">Télécharger jQuery Superbox! 0.9.1 (zip)</a>
+		<p>Le poids de la version compressée de SuperBox! est de <strong>2ko</strong> si la compression GZip est utilisée, et <strong>5,4ko</strong> sans.</p>
+		<p><strong><a href="http://www.pierrebertet.net/projects/jquery_superbox/jquery-superbox-0.9.1.zip">Télécharger jQuery SuperBox! 0.9.1 (zip)</a>
 </strong></p>
 		
 		<h2>Contribuer</h2>
@@ -65,12 +56,12 @@
 &lt;script type=&quot;text/javascript&quot; src=&quot;jquery-min.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;jquery.superbox-min.js&quot;&gt;&lt;/script&gt;</code></pre>
 		
-		<p>Par défaut, la superbox est générée d'après l'attribut <code>rel</code> d'un lien. Il doit contenir le mot <code>superbox</code>, suivi du mode d'affichage entre crochets : <code>rel="superbox[<strong>mode_affichage</strong>]"</code>.</p>
+		<p>Par défaut, la SuperBox! est générée d'après l'attribut <code>rel</code> d'un lien. Il doit contenir le mot <code>superbox</code>, suivi du mode d'affichage entre crochets : <code>rel="superbox[<strong>mode_affichage</strong>]"</code>.</p>
 		<p>Le nom du mode sera éventuellement associé à un <code>id</code> et une ou plusieurs <code>class</code> (syntaxe CSS) qui seront appliqués sur la fenêtre générée : <code>rel="superbox[type<strong>#mon_id.ma_classe</strong>]"</code>.</p>
 		<p>Les paramètres spécifiques au mode d'affichage seront ensuite placés à la suite, entre crochets.</p>
 		<p>La fenêtre est placée en <code>position:fixed</code>, sauf si sa hauteur dépasse la surface d'affichage. Dans ce cas, elle passera en <code>position:absolute</code>, ce qui permettra de voir toute la zone à l'aide des barres de défilement du navigateur.</p>
 		
-		<p>Pour activer <em>jQuery Superbox!</em>, la méthode <code>$.superbox()</code> doit être executée au chargement de la page :</p>
+		<p>Pour activer <em>jQuery SuperBox!</em>, la méthode <code>$.superbox()</code> doit être executée au chargement de la page :</p>
 		<pre><code>$(function(){
 	$.superbox();
 });</code></pre>
@@ -92,19 +83,19 @@
 			<p>Afficher une box contenant une image.</p>
 			
 			<h3>Démonstration</h3>
-			<p><a href="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5.jpg" rel="superbox[image]">Image Superbox (dimensions auto)</a></p>
-			<p><a href="http://farm4.static.flickr.com/3111/2605394848_e11968abaf.jpg" rel="superbox[image][700x]">Image Superbox (largeur définie)</a></p>
-			<p><a href="http://farm4.static.flickr.com/3031/2605388478_b8ae228aab.jpg" rel="superbox[image][x600]">Image Superbox (hauteur définie)</a></p>
+			<p><a href="http://farm4.static.flickr.com/3269/2605397024_73497a6cf5.jpg" rel="superbox[image]">Image SuperBox! (dimensions auto)</a></p>
+			<p><a href="http://farm4.static.flickr.com/3111/2605394848_e11968abaf.jpg" rel="superbox[image][700x]">Image SuperBox! (largeur définie)</a></p>
+			<p><a href="http://farm4.static.flickr.com/3031/2605388478_b8ae228aab.jpg" rel="superbox[image][x600]">Image SuperBox! (hauteur définie)</a></p>
 			
 			<h3>Utilisation</h3>
 			<p>Par défaut, les dimensions prennent celles de l'image (il est possible d'ajouter un padding en css) :</p>
-			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 			<p>Mais il est également possible de spécifier les dimensions :</p>
-			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image][500x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image][500x200]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 			<p>Largeur seulement :</p>
-			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image][500x]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image][500x]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 			<p>Hauteur seulement :</p>
-			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image][x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[image][x200]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 			<p>Si la hauteur de l'image dépasse la hauteur de la box, la hauteur spécifiée n'est pas prise en compte.</p>
 			<p>Si un attribut <code>title</code> existe sur le lien, il sera reporté sur l'image. Sinon, c'est le texte de ce lien qui sera repris pour l'attribut <code>title</code> de l'image.</p>
 		</div>
@@ -127,13 +118,13 @@
 			
 			<h3>Utilisation</h3>
 			<p>Le second paramètre sera le nom de la galerie. Tous les liens portant ce nom feront partie de la même galerie.<br /> Par défaut, les dimensions prennent celles des images (il est possible d'ajouter un padding en css) :</p>
-			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 			<p>Mais il est également possible de spécifier les dimensions :</p>
-			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery][500x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery][500x200]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 			<p>Largeur seulement :</p>
-			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery][500x]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery][500x]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 			<p>Hauteur seulement :</p>
-			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery][x200]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="http://example.com/image.png" rel="superbox[gallery][my_gallery][x200]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 			<p>Si la hauteur de l'image dépasse la hauteur de la box, la hauteur spécifiée n'est pas prise en compte.</p>
 		</div>
 		
@@ -141,35 +132,39 @@
 			<h2>Mode iframe</h2>
 			<p>Générer une box contenant une iframe.</p>
 			<h3>Démonstration</h3>
-			<p><a href="http://fr.wikipedia.org/wiki/Special:Page_au_hasard" rel="superbox[iframe]">Iframe Superbox (dimensions par défaut)</a></p>
-			<p><a href="http://fr.wikipedia.org/wiki/Special:Page_au_hasard" rel="superbox[iframe.wikipedia][750x500]">Iframe Superbox (dimensions définies)</a></p>
+			<p><a href="http://fr.wikipedia.org/wiki/Special:Page_au_hasard" rel="superbox[iframe]">Iframe SuperBox! (dimensions par défaut)</a></p>
+			<p><a href="http://fr.wikipedia.org/wiki/Special:Page_au_hasard" rel="superbox[iframe.wikipedia][750x500]">Iframe SuperBox! (dimensions définies)</a></p>
 			<h3>Utilisation</h3>
-			<pre><code>&lt;a href="http://example.com/" rel="superbox[iframe]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="http://example.com/" rel="superbox[iframe]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 		</div>
 		
 		<div id="mode-content">
 			<h2>Mode contenu</h2>
 			<p>Générer une box contenant un élément de la page.</p>
 			<p>Le lien sera interne, et pointera vers un élément de la page à l'aide de son attribut <code>id</code>.</p>
-			<p>Cet élément sera copié pour apparaître dans Superbox.</p>
+			<p>Cet élément sera copié pour apparaître dans SuperBox!.</p>
 			<h3>Démonstration</h3>
-			<p><a href="#mode-content" rel="superbox[content]">Élément SuperBox</a></p>
-			<p><a href="#mode-content" rel="superbox[content][500x400]">Élément SuperBox (dimensions)</a></p>
+			<p><a href="#mode-content" rel="superbox[content]">Élément SuperBox!</a></p>
+			<p><a href="#mode-content" rel="superbox[content][500x400]">Élément SuperBox! (dimensions)</a></p>
 			<h3>Utilisation</h3>
-			<pre><code>&lt;a href="#box-content" rel="superbox[content]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="#box-content" rel="superbox[content]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 		</div>
 		
 		<div id="mode-ajax">
 			<h2>Mode AJAX</h2>
 			<p>Générer une box contenant un fragment HTML chargé en AJAX.</p>
 			<p>Le lien pointe vers un document HTML complet (version non intrusive), tandis que l'URL de l'appel AJAX se trouve dans le second paramètre.</p>
+			<p>Il est également possible de cibler un élément particulier dans la réponse AJAX, par son attribut <code>id</code>. Cet identifiant doit être placé à la fin de l'URL AJAX, comme une ancre.</p>
 			<h3>Démonstration</h3>
-			<p><a href="crockford.html" rel="superbox[ajax][crockford-ajax.html]">AJAX SuperBox</a></p>
-			<p><a href="crockford.html" rel="superbox[ajax][crockford-ajax.html][500x400]">AJAX SuperBox (dimensions)</a></p>
+			<p><a href="crockford.html" rel="superbox[ajax][crockford-ajax.html]">AJAX SuperBox!</a></p>
+			<p><a href="crockford.html" rel="superbox[ajax][crockford-ajax.html][500x400]">AJAX SuperBox! (dimensions)</a></p>
+			<p><a href="crockford.html" rel="superbox[ajax][crockford.html#quote-container][500x400]">AJAX SuperBox! (cibler un élément)</a></p>
 			<h3>Utilisation</h3>
-			<pre><code>&lt;a href="crockford.html" rel="superbox[ajax][crockford-ajax.html]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="crockford.html" rel="superbox[ajax][crockford-ajax.html]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 			<p>Avec dimensions :</p>
-			<pre><code>&lt;a href="crockford.html" rel="superbox[ajax][crockford-ajax.html][500x400]"&gt;SuperBox&lt;/a&gt;</code></pre>
+			<pre><code>&lt;a href="crockford.html" rel="superbox[ajax][crockford-ajax.html][500x400]"&gt;SuperBox!&lt;/a&gt;</code></pre>
+			<p>En ciblant un élément particulier :</p>
+			<pre><code>&lt;a href="crockford.html" rel="superbox[ajax][crockford.html#quote-container][500x400]"&gt;SuperBox!&lt;/a&gt;</code></pre>
 		</div>
 		
 	</div>
