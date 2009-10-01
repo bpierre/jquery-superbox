@@ -21,4 +21,6 @@
 #superbox-innerbox{padding:10px 0;}
 #superbox.image{text-align:center;}
 #superbox .close,
-#superbox .nextprev{overflow:hidden;margin:0;}
+#superbox .nextprev{overflow:hidden;margin:0;padding:1px;}
+#superbox .close a:focus,
+#superbox .nextprev a:focus{outline:1px dotted;}

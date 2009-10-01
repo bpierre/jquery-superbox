@@ -43,8 +43,17 @@
 			hideElts = hideElts.add("select");
 		}
 		
-		// Create base elements
-		createElements();
+		// Do not init SuperBox! twice
+		if ($.superbox.mainInit !== true) {
+			
+			// Create base elements
+			createElements();
+			
+			// Init global events (left / right, echap)
+			initGlobalEvents();
+			
+			$.superbox.mainInit = true;
+		}
 		
 		// Dispatch types
 		dispatch();
@@ -102,10 +111,10 @@
 		curSettings = $.extend({}, settings, curSettings);
 		$.superbox[type](this, curSettings);
 		
-	    this.click(function(e) {
-	        e.preventDefault();
-	        $curLink = this;
-	    });
+		this.click(function(e) {
+			e.preventDefault();
+			$curLink = this;
+		});
 	};
 	
 	/*-- Types --*/
@@ -113,17 +122,17 @@
 		
 		// Image
 		image: function($elt, curSettings, type) {
-            
+			
 			var relSettings = getRelSettings($elt.get(0)),
 			dimensions = false;
 			
 			// Extra settings
 			if (relSettings && type == "gallery") {
-			    dimensions = relSettings[1];
-			    
+				dimensions = relSettings[1];
+				
 			} else if (relSettings) {
-			    dimensions = relSettings[0];
-		    }
+				dimensions = relSettings[0];
+			}
 			
 			// On click event
 			$elt.click(function() {
@@ -132,7 +141,7 @@
 				
 				// "Prev / Next" buttons
 				if (type === "gallery") {
-				    nextPrev($elt, relSettings[0]);
+					nextPrev($elt, relSettings[0]);
 				}
 				
 				// Loading anim
@@ -161,7 +170,7 @@
 						setBoxAttrs({boxClasses: "image " + curSettings.boxClasses, boxId: curSettings.boxId});
 						
 						// Show box
-						showBox();
+						showBox((type === "gallery"));
 						
 					}).appendTo($innerbox);
 					
@@ -178,7 +187,7 @@
 			
 			// Create group
 			if(!galleryGroups[extraSettings[0]]) {
-			    galleryGroups[extraSettings[0]] = [];
+				galleryGroups[extraSettings[0]] = [];
 			}
 			
 			// Add element to current group
@@ -198,7 +207,7 @@
 			
 			// On click event
 			$elt.click(function() {
-			    
+				
 				prepareBox();
 				
 				// Loading anim
@@ -220,7 +229,7 @@
 					});
 					
 					// iframe
-					$iframe = $('<iframe src="'+ $elt.attr("href") +'" name="'+ $elt.attr("href") +'" frameborder="0" scrolling="auto" hspace="0" width="'+ curSettings.boxWidth +'" height="'+ curSettings.boxHeight +'"></iframe>');
+					$iframe = $('<iframe title="'+ $elt.text() +'" src="'+ $elt.attr("href") +'" name="'+ $elt.attr("href") +'" frameborder="0" scrolling="auto" hspace="0" width="'+ curSettings.boxWidth +'" height="'+ curSettings.boxHeight +'"></iframe>');
 					
 					// On iframe load
 					$iframe.load(function() {
@@ -250,7 +259,7 @@
 			
 			// On click event
 			$elt.click(function() {
-			    
+				
 				prepareBox();
 				
 				// Loading anim
@@ -318,13 +327,13 @@
 					var anchor = splitUrl[1] || false;
 					
 					$.get( ajaxUrl, function(data) {
-					    
-					    // Get a specific element (by ID)?
-					    if (anchor !== false) {
-					        data = $(data).find("#" + anchor);
-				        }
-				        
-					    $(data).appendTo($innerbox);
+						
+						// Get a specific element (by ID)?
+						if (anchor !== false) {
+							data = $(data).find("#" + anchor);
+						}
+						
+						$(data).appendTo($innerbox);
 					});
 					
 					// Id and Classes
@@ -350,7 +359,7 @@
 	function resizeImageBox($curImg, dims) {
 		
 		// Auto
-		$superbox.width($curImg.width() + ($innerbox.css("paddingLeft").slice(0,-2)-0) + ($innerbox.css("paddingRight").slice(0,-2)-0)); // Padding ajouté, pour corriger le problème de définition padding sur $innerbox
+		$superbox.width($curImg.width() + ($innerbox.css("paddingLeft").slice(0,-2)-0) + ($innerbox.css("paddingRight").slice(0,-2)-0)); // image width + $innerbox padding
 		$innerbox.height($curImg.height());
 		
 		// Specified
@@ -370,16 +379,16 @@
 		galleryMode = true;
 		
 		var nextKey = $elt.data("superboxGroupKey") + 1,
-		    prevKey = nextKey - 2;
+			prevKey = nextKey - 2;
 		
 		// Next
 		if (galleryGroups[group][nextKey]) {
 			$nextBtn.removeClass("disabled").unbind("click").bind("click", function() {
 				galleryGroups[group][nextKey].click();
 			});
-		}
-		else {
-		    $nextBtn.addClass("disabled").unbind("click");
+			
+		} else {
+			$nextBtn.addClass("disabled").unbind("click");
 		}
 		
 		// Prev
@@ -387,9 +396,9 @@
 			$prevBtn.removeClass("disabled").unbind("click").bind("click", function() {
 				galleryGroups[group][prevKey].click();
 			});
-		}
-		else {
-		    $prevBtn.addClass("disabled").unbind("click");
+			
+		} else {
+			$prevBtn.addClass("disabled").unbind("click");
 		}
 	};
 	
@@ -400,8 +409,8 @@
 	
 	// Hide Box
 	function hideBox() {
-	    $curLink.focus();
-		$(document).unbind("keydown.superbox");
+		$curLink.focus();
+		$(document).unbind("keydown.spbx_close").unbind("keydown.superbox_np");
 		$loading.hide();
 		$nextprev.hide();
 		$wrapper.hide().css({position: "fixed", top: 0});
@@ -410,7 +419,7 @@
 	
 	// Hide Box + Overlay
 	function hideAll(callback) {
-	    
+		
 		hideBox();
 		$overlay.fadeOut(300, function() {
 			// Show hidden elements for IE6
@@ -423,13 +432,15 @@
 	function initLoading(callback) {
 		
 		// Keys shortcuts
-		$(document).bind("keydown.superbox",function(e) {
-		    
-		    // Escape
-			if (e.keyCode == 27) {
-			    hideAll();
-			}
-		});
+		$(document)
+			.unbind("keydown.spbx_close")
+			.bind("keydown.spbx_close",function(e) {
+				
+				// Escape
+				if (e.keyCode == 27) {
+					hideAll();
+				}
+			});
 		
 		var loading = function() {
 			
@@ -462,21 +473,27 @@
 	};
 	
 	// Display box
-	function showBox() {
+	function showBox(showPrevNext) {
+		
 		// Stop "Loading..."
 		$loading.hide();
 		
-		// Keys shortcuts
-		$(document).unbind("keydown.superbox.np").bind("keydown.superbox.np",function(e) {
-		    
-			// Left/right arrows
-			if (e.keyCode == 39 && $nextBtn.is(":visible")) {
-			    $nextBtn.click();
-			    
-			} else if (e.keyCode == 37 && $prevBtn.is(":visible")) {
-			    $prevBtn.click();
-			}
-		});
+		if (!!showPrevNext) {
+			
+			// Keys shortcuts
+			$(document)
+				.unbind("keydown.superbox_np")
+				.bind("keydown.superbox_np", function(e) {
+					
+					// Left/right arrows
+					if (e.keyCode == 39) {
+						$nextBtn.click();
+					
+					} else if (e.keyCode == 37) {
+						$prevBtn.click();
+					}
+				});
+		}
 		
 		// Show $superbox
 		$superbox.css({position: "static", top: 0, opacity: 0});
@@ -485,10 +502,10 @@
 		if ($.browser.msie && $.browser.version < 8) {
 			$superbox.css({position: "relative", top:"-50%"});
 			
-		    // IE6
-		    if ($.browser.msie && $.browser.version < 7) {
-		        $wrapper.css({position: "absolute", top:"50%"});
-		    }
+			// IE6
+			if ($.browser.msie && $.browser.version < 7) {
+				$wrapper.css({position: "absolute", top:"50%"});
+			}
 		}
 		
 		// Position absolute if image height > window height
@@ -499,53 +516,63 @@
 		settings.beforeShow();
 		
 		$superbox.fadeTo(300,1, function(){
-            settings.afterShow();
+			settings.afterShow();
 		}).focus();
 	};
 	
 	// Create base elements (overlay, wrapper, box, loading)
 	function createElements() {
-		if (!$.superbox.elementsReady) {
-		    
-			// Overlay (background)
-			$overlay = $('<div id="superbox-overlay"/>').appendTo("body").hide();
-			
-			// Wrapper
-			$wrapper = $('<div id="superbox-wrapper"/>').appendTo("body").hide();
-			
-			// Box container
-			$container = $('<div id="superbox-container"/>').appendTo($wrapper);
-			
-			// Box
-			$superbox = $('<div id="superbox" tabindex="0"/>').appendTo($container);
-			
-			// Inner box
-			$innerbox = $('<div id="superbox-innerbox"/>').appendTo($superbox);
-			
-			// "Next / Previous"
-			$nextprev = $('<p class="nextprev"/>').appendTo($superbox).hide();
-			$prevBtn = $('<a class="prev" tabindex="0" role="button"><strong><span>'+ settings.prevTxt +'</span></strong></a>').appendTo($nextprev);
-			$nextBtn = $('<a class="next" tabindex="0" role="button"><strong><span>'+ settings.nextTxt +'</span></strong></a>').appendTo($nextprev);
-			
-			// Add close button
-			$closeBtn = $('<p class="close"><a tabindex="0" role="button"><strong><span>'+ settings.closeTxt +'</span></strong></a></p>').prependTo($superbox).find("a");
-			
-			// "Loading..."
-			$loading = $('<p class="loading">'+ settings.loadTxt +'</p>').appendTo($container).hide();
-			
-			// Hide on click
-			$overlay.add($wrapper).add($closeBtn).click(function() {
-				hideAll();
-			});
-			
-			// Remove "hide on click" on superbox
-			$superbox.click(function(e) {
-				e.stopPropagation();
-			});
-			
-			// Dont call this function twice
-			$.superbox.elementsReady = true;
-		}
+		
+		// Overlay (background)
+		$overlay = $('<div id="superbox-overlay"/>').appendTo("body").hide();
+		
+		// Wrapper
+		$wrapper = $('<div id="superbox-wrapper"/>').appendTo("body").hide();
+		
+		// Box container
+		$container = $('<div id="superbox-container"/>').appendTo($wrapper);
+		
+		// Box
+		$superbox = $('<div id="superbox" tabindex="0"/>').appendTo($container);
+		
+		// Inner box
+		$innerbox = $('<div id="superbox-innerbox"/>').appendTo($superbox);
+		
+		// "Next / Previous"
+		$nextprev = $('<p class="nextprev"/>').appendTo($superbox).hide();
+		$prevBtn = $('<a class="prev" tabindex="0" role="button"><strong><span>'+ settings.prevTxt +'</span></strong></a>').appendTo($nextprev);
+		$nextBtn = $('<a class="next" tabindex="0" role="button"><strong><span>'+ settings.nextTxt +'</span></strong></a>').appendTo($nextprev);
+		
+		// Add close button
+		$closeBtn = $('<p class="close"><a tabindex="0" role="button"><strong><span>'+ settings.closeTxt +'</span></strong></a></p>').prependTo($superbox).find("a");
+		
+		// "Loading..."
+		$loading = $('<p class="loading">'+ settings.loadTxt +'</p>').appendTo($container).hide();
 	};
+	
+	// Init global events : close (echap), keyboard access (focus + enter)
+	function initGlobalEvents() {
+		
+		// Hide on click
+		$overlay.add($wrapper).add($closeBtn).click(function() {
+			hideAll();
+		});
+		
+		// Remove "hide on click" on superbox
+		$superbox.click(function(e) {
+			e.stopPropagation();
+		});
+		
+		// Opera already click on "focus + enter"
+		if (!window.opera) {
+			
+			// Keyboard (focus + enter)
+			$prevBtn.add($closeBtn).add($nextBtn).keypress(function(e) {
+				if (e.keyCode === 13) {
+					$(this).click();
+				}
+			});
+		}
+	}
 	
 })(jQuery);
