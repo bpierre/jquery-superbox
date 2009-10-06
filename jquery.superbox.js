@@ -153,8 +153,8 @@
 			$superbox.width( curSettings.boxWidth+"px" );
 			$innerbox.height( curSettings.boxHeight+"px" );
 			
-			// Id and Classes
-			setBoxAttrs({boxClasses: curSettings.boxClasses, boxId: curSettings.boxId});
+			// Set Id and Classes
+			$superbox.attr("id", curSettings.boxId).attr("class", curSettings.boxClasses);
 			
 			// Append content
 			$(content).appendTo($innerbox);
@@ -433,11 +433,6 @@
 					$prevBtn.click();
 				}
 			});
-	};
-	
-	// Set ID and Class
-	function setBoxAttrs(attrs) {
-		$superbox.attr("id", attrs.boxId).attr("class", attrs.boxClasses);
 	};
 	
 	// Hide Box
