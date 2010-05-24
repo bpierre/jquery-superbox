@@ -40,7 +40,20 @@
 			<li>La <strong>licence MIT</strong>. Cette licence vous permet d'utiliser, de dupliquer, de modifier, de publier, de diffuser, de fusionner, de vendre et même de changer la licence de ce script. Votre seule obligation est de conserver le nom de l'auteur de ce script.</li>
 			<li>C'est <strong>amusant</strong>.</li>
 		</ul>
-		<p><em>jQuery SuperBox!</em> permet d'afficher des <a href="#mode-image">images</a>, des <a href="#mode-gallery">galeries d'images</a>, des <a href="#mode-iframe">pages externes</a>, un <a href="#mode-content">élément de la page</a> et même un <a href="#mode-ajax">contenu chargé en AJAX</a>.</p>
+		<p><em>jQuery SuperBox!</em> permet d'afficher des <a href="#mode-image">images</a>, des <a href="#mode-gallery">galeries d'images</a>, des <a href="#mode-iframe">pages externes</a>, un <a href="#mode-content">élément de la page</a> et même un <a href="#mode-ajax">contenu chargé en AJAX</a>. En fait, il est même possible de générer une SuperBox! depuis une fonction personnalisée.</p>
+		
+		<h2>Nouvelle version un-point-zéro !</h2>
+		<p>La version 1.0 de jQuery SuperBox! apporte d'importantes améliorations et de nombreuses optimisations.</p>
+		<p>En voici une liste non exhaustive :</p>
+		<ul>
+			<li><em>API<span>:</span></em> Il est maintenant possible d'appeler et de remplir SuperBox! directement depuis le code, avec <code>$.superbox.wait()</code> et <code>$.superbox.open()</code>.</li>
+			<li><em>API<span>:</span></em> <code>$.superbox()</code> peut maintenant être appelé plusieurs fois pour réinitialiser SuperBox!.</li>
+			<li><em>Accessibilité<span>:</span></em> En plus des touches fléchées et de la touche echap, il est maintenant possible d'utiliser les touches [TAB] et [ENTRÉE] pour utiliser SuperBox!.</li>
+			<li><em>Accessibilité<span>:</span></em> Lors de l'ouverture, SuperBox! prend le focus. Lorsque SuperBox! se ferme, le focus se repositionne sur le lien initialement cliqué.</li>
+			<li><em>Mode auto<span>:</span></em> En mode AJAX, il est maintenant possible de sélectionner un élément à l'aide de son attribut <code>id</code>.</li>
+			<li><em>API<span>:</span></em> Il est maintenant possible de fermer SuperBox!, à l'aide de la fonction <code>$.superbox.close()</code>.</li>
+			<li><em>Accessibilité<span>:</span></em> En mode iframe, un attribut title est ajouté sur l'élément iframe. Celui-ci reprend le contenu du lien cliqué.</li>
+		</ul>
 		
 		<h2>Téléchargement</h2>
 		<p>Le poids de la version compressée de SuperBox! est de <strong>2ko</strong> si la compression GZip est utilisée, et <strong>5,4ko</strong> sans.</p>

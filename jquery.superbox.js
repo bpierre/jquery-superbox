@@ -109,8 +109,8 @@
 	
 	/*-- Superbox Method --*/
 	$.fn.superbox = function(type, curSettings) {
-		curSettings = $.extend({}, settings, curSettings);
-		$.superbox[type](this, curSettings);
+	  
+		$.superbox[type](this, $.extend({}, settings, curSettings));
 		
 		this.click(function(e) {
 			e.preventDefault();
@@ -227,8 +227,8 @@
 							var boxHeight = $curImg.height();
 						}
 						
-						curSettings = $.extend({}, curSettings, {
-							boxClasses: (galleryMode? "gallery " : "image ") + curSettings.boxClasses,
+						var localSettings = $.extend({}, curSettings, {
+						  boxClasses: (galleryMode? "gallery " : "image ") + curSettings.boxClasses,
 							boxWidth: boxWidth,
 							boxHeight: boxHeight,
 							beforeOpen: function() {
@@ -240,7 +240,7 @@
 						});
 						
 						// Open SuperBox!
-						$.superbox.open($curImg, curSettings);
+						$.superbox.open($curImg, localSettings);
 					});
 					
 					// Append image to SuperBox! (to trigger loading)
@@ -287,10 +287,10 @@
 						dims = extraSettings[0].split("x");
 					}
 					
-					curSettings = $.extend({}, curSettings, {
+					var localSettings = $.extend({}, curSettings, {
+						boxClasses: "iframe " + curSettings.boxClasses,
 						boxWidth: dims[0] || curSettings.boxWidth,
-						boxHeight: dims[1] || curSettings.boxHeight,
-						boxClasses: "iframe " + curSettings.boxClasses
+						boxHeight: dims[1] || curSettings.boxHeight
 					});
 					
 					// iframe element
@@ -300,7 +300,7 @@
 					$iframe.one("load", function() {
 						
 						// Open SuperBox!
-						$.superbox.open($iframe, curSettings);
+						$.superbox.open($iframe, localSettings);
 					});
 					
 					// Append iframe to SuperBox! (to trigger loading)
@@ -328,14 +328,14 @@
 					}
 					
 					// Specific settings
-					curSettings = $.extend({}, curSettings, {
+					var localSettings = $.extend({}, curSettings, {
+					boxClasses: "content " + curSettings.boxClasses,
 						boxWidth: dims[0] || curSettings.boxWidth,
-						boxHeight: dims[1] || curSettings.boxHeight,
-						boxClasses: "content " + curSettings.boxClasses
+						boxHeight: dims[1] || curSettings.boxHeight
 					});
 					
 					// Open SuperBox!
-					$.superbox.open($($elt.attr('href')).clone(), curSettings);
+					$.superbox.open($($elt.attr('href')).clone().show(), localSettings);
 				});
 				
 			});
@@ -359,10 +359,10 @@
 					}
 					
 					// Extend default dimension settings
-					curSettings = $.extend({}, curSettings, {
+					var localSettings = $.extend({}, curSettings, {
+						boxClasses: "ajax " + curSettings.boxClasses,
 						boxWidth: dims[0] || curSettings.boxWidth,
-						boxHeight: dims[1] || curSettings.boxHeight,
-						boxClasses: "ajax " + curSettings.boxClasses
+						boxHeight: dims[1] || curSettings.boxHeight
 					});
 					
 					// Get Ajax URL + ID
@@ -378,7 +378,7 @@
 						}
 						
 						// Open SuperBox!
-						$.superbox.open(data, curSettings);
+						$.superbox.open(data, localSettings);
 					});
 				});
 			});
