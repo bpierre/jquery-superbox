@@ -1,6 +1,6 @@
 /*
  * jQuery SuperBox! 0.9.2-dev
- * Copyright (c) 2009 Pierre Bertet (pierrebertet.net)
+ * Copyright (c) 2011 Pierre Bertet (pierrebertet.net)
  * Licensed under the MIT (MIT-LICENSE.txt)
  *
  * TODO :

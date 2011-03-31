@@ -14,7 +14,7 @@ java -jar ../yuicompressor-2.4.2.jar jquery.superbox.js -o jquery.superbox-min.j
 sed "1i\\
 	/*\\
 	 * jQuery SuperBox! $1\\
-	 * Copyright (c) 2009 Pierre Bertet (pierrebertet.net)\\
+	 * Copyright (c) 2011 Pierre Bertet (pierrebertet.net)\\
 	 * Licensed under the MIT (MIT-LICENSE.txt)\\
 	 *\\
 	*/\\
