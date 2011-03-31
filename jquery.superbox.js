@@ -56,6 +56,9 @@
 			$.superbox.mainInit = true;
 		}
 		
+		// Reset gallery groups
+		galleryGroups = {};
+    
 		// Dispatch types
 		dispatch();
 	};
