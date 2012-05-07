@@ -8,10 +8,11 @@
  * - Animations
  * - Image / Gallery mode : display a legend
 */
+"use strict";
 (function($) {
 	
 	// Local variables
-	var $curLink, $overlay, $wrapper, $container, $superbox, $closeBtn, $loading, $nextprev, $nextBtn, $prevBtn, settings,
+	var $curLink, $overlay, $wrapper, $container, $superbox, $closeBtn, $loading, $nextprev, $nextBtn, $prevBtn, settings, $innerbox, $closeElts,
 	
 	// Default settings
 	defaultSettings = {
