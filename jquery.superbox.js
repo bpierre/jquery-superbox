@@ -268,6 +268,16 @@
 				galleryGroups[extraSettings[0]] = [];
 			}
 			
+			// Test if the large image is already in the gallery
+			for (var i=0; i < galleryGroups[extraSettings[0]].length; i++) {
+				if (galleryGroups[extraSettings[0]][i][0].href === $elt[0].href) {
+					$elt.click(function(){
+						galleryGroups[extraSettings[0]][i].click();
+					});
+					return;
+				}
+			};
+			
 			// Add element to current group
 			galleryGroups[extraSettings[0]].push($elt);
 			
