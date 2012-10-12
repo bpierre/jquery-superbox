@@ -590,7 +590,7 @@
 	function initGlobalEvents() {
 		
 		// Hide on click
-		if ( settings.overlayClose === 'true' ) { 
+		if (settings.overlayClose) {
 			$closeElts = $overlay.add($wrapper).add($closeBtn);
 		} else {
 			$closeElts = $closeBtn;
