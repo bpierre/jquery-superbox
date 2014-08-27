@@ -235,7 +235,11 @@
 						}
 						
 						curSettings = $.extend({}, curSettings, {
-							boxClasses: (galleryMode? "gallery " : "image ") + curSettings.boxClasses,
+							boxClasses: (/^(image|gallery) /.test(curSettings.boxClasses)
+								? ""
+								: galleryMode
+									? "gallery"
+									: "image") + curSettings.boxClasses,
 							boxWidth: boxWidth,
 							boxHeight: 'auto',
 							beforeOpen: function() {
@@ -307,7 +311,7 @@
 					curSettings = $.extend({}, curSettings, {
 						boxWidth: dims[0] || curSettings.boxWidth,
 						boxHeight: dims[1] || curSettings.boxHeight,
-						boxClasses: "iframe " + curSettings.boxClasses
+						boxClasses: (/^iframe /.test(curSettings.boxClasses) ? "" : "iframe") + curSettings.boxClasses
 					});
 					
 					// iframe element
@@ -355,7 +359,7 @@
 					curSettings = $.extend({}, curSettings, {
 						boxWidth: dims[0] || curSettings.boxWidth,
 						boxHeight: dims[1] || curSettings.boxHeight,
-						boxClasses: "content " + curSettings.boxClasses
+						boxClasses: (/^content /.test(curSettings.boxClasses) ? "" : "content") + curSettings.boxClasses
 					});
 
 					// Open SuperBox!
@@ -387,7 +391,7 @@
 					curSettings = $.extend({}, curSettings, {
 						boxWidth: dims[0] || curSettings.boxWidth,
 						boxHeight: dims[1] || curSettings.boxHeight,
-						boxClasses: "ajax " + curSettings.boxClasses
+						boxClasses: (/^ajax /.test(curSettings.boxClasses) ? "" : "ajax") + curSettings.boxClasses
 					});
 					
 					// Get Ajax URL + ID
